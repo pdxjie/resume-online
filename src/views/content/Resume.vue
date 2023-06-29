@@ -15,8 +15,7 @@ export default defineComponent({
   <div class="resume-content">
     <a-tabs v-model:activeKey="activeKey">
       <a-tab-pane key="1" tab="MarkDown模式">Content of Tab Pane 1</a-tab-pane>
-      <a-tab-pane key="2" tab="修改" force-render>Content of Tab Pane 2</a-tab-pane>
-      <a-tab-pane key="3" tab="Tab 3">Content of Tab Pane 3</a-tab-pane>
+      <a-tab-pane key="2" tab="在线模板模式" force-render>Content of Tab Pane 2</a-tab-pane>
     </a-tabs>
   </div>
 </template>
