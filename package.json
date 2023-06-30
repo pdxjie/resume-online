@@ -9,8 +9,15 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
+    "@codemirror/lang-markdown": "^6.2.0",
+    "@codemirror/theme-one-dark": "^6.1.2",
     "ant-design-vue": "^3.2.20",
+    "codemirror": "^6.0.1",
     "core-js": "^3.6.5",
+    "dayjs": "^1.11.8",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "markdown-transform-html": "^1.6.6",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
@@ -37,6 +44,13 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "keywords": [
+    "resume",
+    "markdown-pdf",
+    "markdown-to-pdf",
+    "艺简",
+    "在线制作简历"
+  ],
   "lint-staged": {
     "*.{js,jsx,vue}": [
       "vue-cli-service lint",
