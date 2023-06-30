@@ -24,7 +24,7 @@ const connectAuthor = ref(weChatImg)
         </div>
         <!-- bottom -->
         <div class="bottom-selection">
-          <copyright-circle-outlined style="color: #888" /><span style="color: #888">2023 在线简历制作</span>
+          <copyright-circle-outlined style="color: #888" /><span style="color: #888">2023 一书简历</span>
         </div>
       </div>
     </a-layout-footer>

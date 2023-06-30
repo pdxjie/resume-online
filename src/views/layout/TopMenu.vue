@@ -93,6 +93,7 @@ export default defineComponent({
   .header {
     display: flex;
     align-items: center;
+    margin-right: 25px;
     img {
       width: 35px;
       height: 35px;
