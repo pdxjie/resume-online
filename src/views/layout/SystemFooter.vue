@@ -20,7 +20,7 @@ const connectAuthor = ref(weChatImg)
               <aliwangwang-outlined /> 联系作者
             </a-tooltip>
           </a>
-          <a href="https://github.com/pdxjie" target="_blank"><security-scan-outlined /> 建设反馈</a>
+          <a href="https://github.com/pdxjie/resume-online/issues" target="_blank"><security-scan-outlined /> 建设反馈</a>
         </div>
         <!-- bottom -->
         <div class="bottom-selection">
