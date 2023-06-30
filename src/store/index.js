@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    mode: 'markdown'
+    mode: 'online'
   },
   mutations: {
     CHANGE_MODE (state, mode) {

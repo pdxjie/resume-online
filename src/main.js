@@ -7,6 +7,7 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import '@/styles/common.less'
 import * as Icons from '@ant-design/icons-vue'
+import '@/assets/css/font.css'
 
 const app = createApp(App)
 
