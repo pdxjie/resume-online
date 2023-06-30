@@ -6,7 +6,7 @@ import ResumeLogo from '@/assets/images/resume.svg'
 export default defineComponent({
   setup () {
     const selectedKeys = ref(['2'])
-    const activeKey = ref('markdown')
+    const activeKey = ref('online')
     const resumeLogo = ref(ResumeLogo)
     let menus = reactive([])
     let filterMenu = ref([])
@@ -44,7 +44,7 @@ export default defineComponent({
       <div class="menu-style">
         <div class="header">
           <img :src="resumeLogo" alt="">
-          <span class="web-title">一书简历</span>
+          <span class="web-title">艺简</span>
         </div>
         <a-menu
           :selectedKeys="[$route.path]"
@@ -64,6 +64,38 @@ export default defineComponent({
     </div>
     <div>
       <div class="operate-left">
+        <div style="display:flex">
+          <a-tooltip placement="top">
+            <template #title>
+              <span>预览</span>
+            </template>
+            <a-button v-if="activeKey === 'online'" shape="circle">
+              <template #icon>
+                <eye-outlined />
+              </template>
+            </a-button>
+          </a-tooltip>
+          <a-tooltip placement="top">
+            <template #title>
+              <span>导出</span>
+            </template>
+            <a-button shape="circle">
+              <template #icon>
+                <cloud-upload-outlined />
+              </template>
+            </a-button>
+          </a-tooltip>
+          <a-tooltip placement="top">
+            <template #title>
+              <span>重置</span>
+            </template>
+            <a-button shape="circle">
+              <template #icon>
+                <undo-outlined />
+              </template>
+            </a-button>
+          </a-tooltip>
+        </div>
         <div style="margin-right:10px">
           <span style="margin-right: 10px">制作模式</span>
           <a-select
@@ -73,14 +105,9 @@ export default defineComponent({
             @focus="focus"
             @change="handleChange"
           >
+           <a-select-option value="online">在线模板模式</a-select-option>
             <a-select-option value="markdown">MarkDown模式</a-select-option>
-            <a-select-option value="online">在线模板模式</a-select-option>
           </a-select>
-        </div>
-        <div style="display:flex">
-          <a-button v-if="activeKey === 'online'">在线预览</a-button>
-          <a-button >PDF打印</a-button>
-          <a-button>重置内容</a-button>
         </div>
       </div>
     </div>
@@ -100,7 +127,8 @@ export default defineComponent({
       margin-right: 10px;
     }
     .web-title {
-      font-size: 20px;
+      font-family: 'hanyitaozaizijian';
+      font-size: 30px;
       font-weight: 400;
       color: rgb(45 106 234);
     }
