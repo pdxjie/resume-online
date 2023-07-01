@@ -31,5 +31,7 @@ export default defineComponent({
 <style scoped>
 .markdown-mode {
   margin: 0 15px;
+  position: absolute;
+  top: 60px;
 }
 </style>
