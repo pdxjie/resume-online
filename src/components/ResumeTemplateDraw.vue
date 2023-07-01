@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, ref, computed, watch } from 'vue'
+import { defineComponent, ref, computed, getCurrentInstance } from 'vue'
 import { useStore } from 'vuex'
 export default defineComponent({
   props: {
@@ -14,29 +14,30 @@ export default defineComponent({
     const placement = ref('right')
     let isChecked = ref(false)
     const store = useStore()
-
-    const changeTemplate = (template) => {
-      isChecked.value = template.img === selectedResumeTemplate.value.img
-    }
+    const { proxy } = getCurrentInstance()
     const drawVisible = computed(() => {
       return store.state.resumeTemplateDrawVisible
     })
-    const selectedResumeTemplate = computed(() => {
-      return store.state.selectedResumeTemplate
-    })
-    watch(selectedResumeTemplate, (nVal, oVal) => {
-      console.log(nVal, 'resume template....')
-    }, { immediate: true, deep: true })
+    // 关闭弹窗
     const onClose = () => {
       store.commit('CHANGE_TEMPLATE_STATUS')
     }
+    // 预览图片
+    const previewResume = (img) => {
+      proxy.$hevueImgPreview(img)
+    }
+    // 选择简历模板
+    const selectResumeTemplate = (template) => {
+      store.commit('CHANGE_RESUME_TEMPLATE', template)
+      store.commit('CHANGE_TEMPLATE_STATUS')
+    }
     return {
-      selectedResumeTemplate,
+      selectResumeTemplate,
       placement,
       drawVisible,
       isChecked,
       onClose,
-      changeTemplate
+      previewResume
     }
   }
 })
@@ -51,19 +52,16 @@ export default defineComponent({
     :visible="drawVisible"
     @close="onClose"
   >
-    <template #extra>
-      <a-button style="margin-right: 8px" @click="onClose">取消</a-button>
-      <a-button type="primary" @click="onClose">确定</a-button>
-    </template>
     <div class="template-resume">
       <div class="template-selection" v-for="template in templates" :key="template.img">
         <img class="template-hover" :src="template.img" alt="">
+        <a-tag class="tag-resume" color="green">{{ template.name }}</a-tag>
         <div class="template-operation">
           <a-tooltip placement="top">
             <template #title>
               <span>简历预览</span>
             </template>
-            <a-button shape="circle">
+            <a-button @click="previewResume(template.img)" shape="circle">
               <template #icon>
                 <eye-outlined />
               </template>
@@ -73,7 +71,7 @@ export default defineComponent({
             <template #title>
               <span>选择模板</span>
             </template>
-            <a-button shape="circle">
+            <a-button @click="selectResumeTemplate(template)" shape="circle">
               <template #icon>
                 <select-outlined />
               </template>
@@ -110,6 +108,12 @@ export default defineComponent({
       left: 50%;
       transform: translate(-50%);
       opacity: 0;
+    }
+    .tag-resume {
+      position: absolute;
+      left: -7px;
+      top: 5px;
+      border-radius: 5px;
     }
   }
   .template-selection:hover {

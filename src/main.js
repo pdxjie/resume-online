@@ -8,14 +8,14 @@ import 'ant-design-vue/dist/antd.css'
 import '@/styles/common.less'
 import * as Icons from '@ant-design/icons-vue'
 import '@/assets/css/font.css'
-
+import hevueImgPreview from 'hevue-img-preview'
 const app = createApp(App)
 
 app.use(Antd)
   .use(router)
+  .use(hevueImgPreview)
   .use(store)
   .mount('#app')
-
 nextTick(() => {
   // 配置全局对象
   app.config.globalProperties.$icons = Icons
