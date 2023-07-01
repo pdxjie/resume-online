@@ -52,13 +52,10 @@ export default defineComponent({
     :visible="drawVisible"
     @close="onClose"
   >
-    <template #extra>
-      <a-button style="margin-right: 8px" @click="onClose">取消</a-button>
-      <a-button type="primary" @click="onClose">确定</a-button>
-    </template>
     <div class="template-resume">
       <div class="template-selection" v-for="template in templates" :key="template.img">
         <img class="template-hover" :src="template.img" alt="">
+        <a-tag class="tag-resume" color="green">{{ template.name }}</a-tag>
         <div class="template-operation">
           <a-tooltip placement="top">
             <template #title>
@@ -111,6 +108,12 @@ export default defineComponent({
       left: 50%;
       transform: translate(-50%);
       opacity: 0;
+    }
+    .tag-resume {
+      position: absolute;
+      left: -7px;
+      top: 5px;
+      border-radius: 5px;
     }
   }
   .template-selection:hover {
