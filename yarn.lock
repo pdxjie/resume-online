@@ -5346,6 +5346,11 @@ he@1.2.x:
   resolved "https://registry.npmmirror.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+hevue-img-preview@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.npmmirror.com/hevue-img-preview/-/hevue-img-preview-6.1.0.tgz#3c390370ac607f1ff478d419967b84eb21b72348"
+  integrity sha512-2KrbKUUGUbwYR6MuKVeBghPIywTBYFr0XMoJADoZ33cQHDT0x1A7B4g8EwL1zXK6eyk1low5kefmUw2q+yIfvw==
+
 hex-color-regex@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmmirror.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"

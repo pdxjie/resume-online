@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, ref, computed, watch } from 'vue'
+import { defineComponent, ref, computed, watch, getCurrentInstance } from 'vue'
 import { useStore } from 'vuex'
 export default defineComponent({
   props: {
@@ -14,10 +14,7 @@ export default defineComponent({
     const placement = ref('right')
     let isChecked = ref(false)
     const store = useStore()
-
-    const changeTemplate = (template) => {
-      isChecked.value = template.img === selectedResumeTemplate.value.img
-    }
+    const { proxy } = getCurrentInstance()
     const drawVisible = computed(() => {
       return store.state.resumeTemplateDrawVisible
     })
@@ -30,13 +27,16 @@ export default defineComponent({
     const onClose = () => {
       store.commit('CHANGE_TEMPLATE_STATUS')
     }
+    const previewResume = (img) => {
+      proxy.$hevueImgPreview(img)
+    }
     return {
       selectedResumeTemplate,
       placement,
       drawVisible,
       isChecked,
       onClose,
-      changeTemplate
+      previewResume
     }
   }
 })
@@ -63,7 +63,7 @@ export default defineComponent({
             <template #title>
               <span>简历预览</span>
             </template>
-            <a-button shape="circle">
+            <a-button @click="previewResume(template.img)" shape="circle">
               <template #icon>
                 <eye-outlined />
               </template>
