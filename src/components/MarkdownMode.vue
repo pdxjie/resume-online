@@ -1,13 +1,20 @@
 <script>
 import { defineComponent } from 'vue'
 export default defineComponent({
+  props: {
+    resumeTemplate: {
+      type: Object
+    }
+  },
   setup () {
   }
 })
 </script>
 
 <template>
-  <div>Markdown Mode</div>
+  <div>
+    {{ resumeTemplate }}
+  </div>
 </template>
 
 <style scoped>

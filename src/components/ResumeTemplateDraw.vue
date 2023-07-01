@@ -1,5 +1,5 @@
 <script>
-import { defineComponent, ref, computed, watch, getCurrentInstance } from 'vue'
+import { defineComponent, ref, computed, getCurrentInstance } from 'vue'
 import { useStore } from 'vuex'
 export default defineComponent({
   props: {
@@ -18,20 +18,21 @@ export default defineComponent({
     const drawVisible = computed(() => {
       return store.state.resumeTemplateDrawVisible
     })
-    const selectedResumeTemplate = computed(() => {
-      return store.state.selectedResumeTemplate
-    })
-    watch(selectedResumeTemplate, (nVal, oVal) => {
-      console.log(nVal, 'resume template....')
-    }, { immediate: true, deep: true })
+    // 关闭弹窗
     const onClose = () => {
       store.commit('CHANGE_TEMPLATE_STATUS')
     }
+    // 预览图片
     const previewResume = (img) => {
       proxy.$hevueImgPreview(img)
     }
+    // 选择简历模板
+    const selectResumeTemplate = (template) => {
+      store.commit('CHANGE_RESUME_TEMPLATE', template)
+      store.commit('CHANGE_TEMPLATE_STATUS')
+    }
     return {
-      selectedResumeTemplate,
+      selectResumeTemplate,
       placement,
       drawVisible,
       isChecked,
@@ -73,7 +74,7 @@ export default defineComponent({
             <template #title>
               <span>选择模板</span>
             </template>
-            <a-button shape="circle">
+            <a-button @click="selectResumeTemplate(template)" shape="circle">
               <template #icon>
                 <select-outlined />
               </template>
