@@ -1,69 +1,16 @@
 <script>
 import { defineComponent, reactive, ref } from 'vue'
-import ikun from '@/assets/images/ikun.jpg'
 import { v4 as uuidv4 } from 'uuid'
 import { message } from 'ant-design-vue'
 export default defineComponent({
-  setup () {
+  props: {
+    basicInfo: {
+      type: Object
+    }
+  },
+  setup (props, ctx) {
     const activeKey = ref('1')
     const handleClick = () => {}
-    const basicInfo = reactive({
-      title: '基础信息',
-      edit: false,
-      isAppear: true,
-      avatar: ikun,
-      basicInfos: [
-        {
-          id: uuidv4(),
-          basicKey: '姓名',
-          basicVal: '小黑子',
-          placeholderKey: '属性',
-          placeholderVal: '属性值'
-        },
-        {
-          id: uuidv4(),
-          basicKey: '性别',
-          basicVal: '男',
-          placeholderKey: '属性',
-          placeholderVal: '属性值'
-        },
-        {
-          id: uuidv4(),
-          basicKey: '工作年限',
-          basicVal: '5年',
-          placeholderKey: '属性',
-          placeholderVal: '属性值'
-        },
-        {
-          id: uuidv4(),
-          basicKey: '专业',
-          basicVal: '软件工程',
-          placeholderKey: '属性',
-          placeholderVal: '属性值'
-        },
-        {
-          id: uuidv4(),
-          basicKey: '电话',
-          basicVal: '12312344321',
-          placeholderKey: '属性',
-          placeholderVal: '属性值'
-        },
-        {
-          id: uuidv4(),
-          basicKey: '邮箱',
-          basicVal: 'ikun-lover@163.com',
-          placeholderKey: '属性',
-          placeholderVal: '属性值'
-        },
-        {
-          id: uuidv4(),
-          basicKey: 'github',
-          basicVal: 'https://github.com/xxx',
-          placeholderKey: '属性',
-          placeholderVal: '属性值'
-        }
-      ]
-    })
     let newInfo = reactive({
       basicKey: '',
       basicVal: '',
@@ -74,10 +21,10 @@ export default defineComponent({
     // 点击header标题时不进行展开或收放
     const disExpandCollapse = () => {}
     const allowEditor = () => {
-      basicInfo.edit = !basicInfo.edit
+      props.basicInfo.edit = !props.basicInfo.edit
     }
     const removeBasicInfo = (id) => {
-      basicInfo.basicInfos = basicInfo.basicInfos.filter(info => info.id !== id)
+      props.basicInfo.basicInfos = props.basicInfo.basicInfos.filter(info => info.id !== id)
     }
     const addBasicInfo = () => {
       if (newInfo.basicKey.trim() === '' || newInfo.basicVal.trim() === '') {
@@ -86,13 +33,12 @@ export default defineComponent({
       }
       const cacheInfo = JSON.parse(JSON.stringify(newInfo))
       cacheInfo.id = uuidv4()
-      basicInfo.basicInfos.push(cacheInfo)
+      props.basicInfo.basicInfos.push(cacheInfo)
       newInfo.basicKey = ''
       newInfo.basicVal = ''
     }
     return {
       newInfo,
-      basicInfo,
       activeKey,
       handleClick,
       allowEditor,
@@ -112,7 +58,7 @@ export default defineComponent({
         <a-row>
           <a-col :span="20">
             <a-row>
-              <a-col :span="12" v-for="info in basicInfo.basicInfos">
+              <a-col :span="12" v-for="info in basicInfo.basicInfos || []" :key="info.id">
                 <a-input-group compact class="margin-b-10">
                   <a-input v-model:value="info.basicKey" style="width: 20%" :placeholder="info.placeholderKey"/>
                   <a-input v-model:value="info.basicVal" style="width: 60%" :placeholder="info.placeholderVal"/>

@@ -1,12 +1,11 @@
 import { createStore } from 'vuex'
-import itTemplate from '../templates/modules/1_it/index'
+import { normalTemplate } from '@/templates/resumeTemplate'
 
 export default createStore({
   state: {
     mode: 'markdown',
     resumeTemplateDrawVisible: false,
-    selectedResumeTemplate: itTemplate,
-    resumeContent: ''
+    selectedResumeTemplate: normalTemplate
   },
   mutations: {
     CHANGE_MODE (state, mode) {
@@ -17,11 +16,6 @@ export default createStore({
     },
     CHANGE_RESUME_TEMPLATE (state, template) {
       state.selectedResumeTemplate = template
-    },
-    SET_RESUME_CONTENT (state, content) {
-      state.resumeContent = content
-      if (!content) {
-      }
     }
   },
   actions: {

@@ -4,11 +4,6 @@ import MarkdownEditor from "./MarkdownEditor"
 import PreviewSync from "./PreviewSync"
 export default defineComponent({
   components: { MarkdownEditor, PreviewSync },
-  props: {
-    resumeTemplate: {
-      type: Object
-    }
-  },
   setup () {
   }
 })
@@ -18,7 +13,7 @@ export default defineComponent({
   <div class="markdown-mode">
     <a-row :gutter="10">
       <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
-        <MarkdownEditor :resumeTemplate="resumeTemplate"/>
+        <MarkdownEditor />
       </a-col>
       <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <PreviewSync />

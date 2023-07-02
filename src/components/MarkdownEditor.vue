@@ -1,18 +1,22 @@
 <script>
-import { defineComponent } from 'vue'
-import { v4 as uuid4 } from 'uuid'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 import BasicInfoCollapse from '@/components/BasicInfoCollapse'
 import OtherInfoCollapse from '@/components/OtherInfoCollapse'
 export default defineComponent({
   components: { OtherInfoCollapse, BasicInfoCollapse },
-  props: {
-    resumeTemplate: {
-      type: Object
-    }
-  },
   setup () {
+    const store = useStore()
+    const defaultTemplate = computed(() => {
+      return store.state.selectedResumeTemplate
+    })
+    const handleChangeBasicInfo = (n) => {
+      console.log('我接收到了传的值', n)
+      store.commit('CHANGE_RESUME_TEMPLATE', n)
+    }
     return {
-      uuid4
+      defaultTemplate,
+      handleChangeBasicInfo
     }
   }
 })
@@ -21,11 +25,8 @@ export default defineComponent({
 
 <template>
   <div class="markdown-editor">
-    <BasicInfoCollapse />
-    <OtherInfoCollapse :id="uuid4()"/>
-    <OtherInfoCollapse :id="uuid4()"/>
-    <OtherInfoCollapse :id="uuid4()"/>
-    <OtherInfoCollapse :id="uuid4()"/>
+    <BasicInfoCollapse :basicInfo="defaultTemplate.basicInfo" @change-value="handleChangeBasicInfo"/>
+    <OtherInfoCollapse v-for="otherInfo in defaultTemplate.otherInfos" :key="otherInfo.id" :id="otherInfo.id" :otherInfo="otherInfo"/>
   </div>
 </template>
 

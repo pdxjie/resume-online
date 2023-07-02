@@ -15,7 +15,7 @@
     "ant-design-vue": "^3.2.20",
     "codemirror": "^6.0.1",
     "core-js": "^3.6.5",
-    "dayjs": "^1.11.8",
+    "dayjs": "^1.11.9",
     "hevue-img-preview": "^6.1.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",

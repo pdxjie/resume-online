@@ -20,6 +20,8 @@ module.exports = {
     'vue/require-v-for-key': 'off',
     "spaced-comment": "off",
     "quotes": "off",
+    "vue/no-mutating-props": "off",
+    "vue/no-setup-props-destructure": "off",
     "vue/valid-v-for": "off",
     "quote-props": "off"
   }

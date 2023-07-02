@@ -1,14 +1,23 @@
 <script>
-import { defineComponent } from "vue"
+import { computed, defineComponent } from 'vue'
+import { useStore } from 'vuex'
 export default defineComponent({
-  setup () {}
+  setup () {
+    const store = useStore()
+    const resumeTemplate = computed(() => {
+      return store.state.selectedResumeTemplate
+    })
+    return {
+      resumeTemplate
+    }
+  }
 })
 
 </script>
 
 <template>
   <div class="preview-async">
-    同步预览
+    {{ resumeTemplate }}
   </div>
 </template>
 
@@ -17,7 +26,6 @@ export default defineComponent({
   width: 100%;
   height: calc(100vh - 120px);
   overflow: auto;
-  background-color: aquamarine;
   border-radius: 8px;
   margin-top: 10px;
   padding: 10px;

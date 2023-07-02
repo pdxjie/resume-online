@@ -5,8 +5,6 @@ import { useWindowSize } from '@vueuse/core'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import ResumeLogo from '@/assets/images/resume.svg'
-import internet from '@/templates/modules/1_it/index'
-import concise from '@/templates/modules/2_concise/index'
 export default defineComponent({
   components: { ResumeTemplateDraw },
   setup () {
@@ -24,20 +22,6 @@ export default defineComponent({
     onMounted(() => {
       menus = routers.getRoutes()
       filterMenu.value = menus.filter(menu => menu.children.length === 0)
-      console.log(filterMenu, 'routers')
-      const template = []
-      template.push(internet)
-      template.push(internet)
-      template.push(concise)
-      template.push(concise)
-      template.push(concise)
-      template.push(concise)
-      template.push(concise)
-      template.push(concise)
-      template.push(concise)
-      template.push(concise)
-      templates.value = template
-      console.log(templates.value)
     })
     const handleChange = (tab) => {
       activeKey.value = tab
