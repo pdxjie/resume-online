@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Antd from 'ant-design-vue'
-import 'ant-design-vue/dist/antd.css'
+import 'ant-design-vue/dist/antd.less'
 import '@/styles/common.less'
 import * as Icons from '@ant-design/icons-vue'
 import '@/assets/css/font.css'
@@ -16,6 +16,7 @@ app.use(Antd)
   .use(hevueImgPreview)
   .use(store)
   .mount('#app')
+
 nextTick(() => {
   // 配置全局对象
   app.config.globalProperties.$icons = Icons
