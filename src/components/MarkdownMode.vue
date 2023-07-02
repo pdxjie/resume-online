@@ -17,10 +17,10 @@ export default defineComponent({
 <template>
   <div class="markdown-mode">
     <a-row :gutter="10">
-      <a-col :span="12">
+      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <MarkdownEditor :resumeTemplate="resumeTemplate"/>
       </a-col>
-      <a-col :span="12">
+      <a-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
         <PreviewSync />
       </a-col>
     </a-row>
@@ -30,7 +30,8 @@ export default defineComponent({
 
 <style scoped>
 .markdown-mode {
-  margin: 0 15px;
+  width: 100%;
+  padding: 0 10px;
   position: absolute;
   top: 60px;
 }

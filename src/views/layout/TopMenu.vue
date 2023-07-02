@@ -1,6 +1,7 @@
 <script>
 import { onMounted, ref, reactive, defineComponent } from 'vue'
 import ResumeTemplateDraw from '@/components/ResumeTemplateDraw'
+import { useWindowSize } from '@vueuse/core'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import ResumeLogo from '@/assets/images/resume.svg'
@@ -10,6 +11,7 @@ export default defineComponent({
   components: { ResumeTemplateDraw },
   setup () {
     // 变量
+    const { width } = useWindowSize()
     let menus = reactive([])
     let filterMenu = ref([])
     let templates = ref([])
@@ -50,6 +52,7 @@ export default defineComponent({
       store.commit('CHANGE_TEMPLATE_STATUS')
     }
     return {
+      width,
       selectedKeys,
       resumeLogo,
       filterMenu,
@@ -73,6 +76,7 @@ export default defineComponent({
             <span class="web-title">艺简</span>
           </div>
           <a-menu
+            v-if="width > 1000"
             :selectedKeys="[$route.path]"
             :default-selected-keys="['1']"
             theme="light"
@@ -95,7 +99,7 @@ export default defineComponent({
               <template #title>
                 <span>切换模板</span>
               </template>
-              <a-button @click="changeTemplate()" shape="circle">
+              <a-button v-if="width > 1000" @click="changeTemplate()" shape="circle">
                 <template #icon>
                   <switcher-outlined />
                 </template>
@@ -132,7 +136,7 @@ export default defineComponent({
               </a-button>
             </a-tooltip>
           </div>
-          <div style="margin-right:10px">
+          <div style="margin-right:10px" v-if="width > 1000">
             <a-select
               ref="select"
               v-model:value="activeKey"

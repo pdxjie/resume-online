@@ -5,7 +5,8 @@ export default createStore({
   state: {
     mode: 'markdown',
     resumeTemplateDrawVisible: false,
-    selectedResumeTemplate: itTemplate
+    selectedResumeTemplate: itTemplate,
+    resumeContent: ''
   },
   mutations: {
     CHANGE_MODE (state, mode) {
@@ -16,6 +17,11 @@ export default createStore({
     },
     CHANGE_RESUME_TEMPLATE (state, template) {
       state.selectedResumeTemplate = template
+    },
+    SET_RESUME_CONTENT (state, content) {
+      state.resumeContent = content
+      if (!content) {
+      }
     }
   },
   actions: {

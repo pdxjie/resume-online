@@ -1,19 +1,22 @@
 <script>
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
+import BasicInfoCollapse from '@/components/BasicInfoCollapse'
 export default defineComponent({
+  components: { BasicInfoCollapse },
   props: {
     resumeTemplate: {
       type: Object
     }
   },
-  setup () {}
+  setup () {
+  }
 })
 
 </script>
 
 <template>
   <div class="markdown-editor">
-    {{ resumeTemplate.content }}
+    <BasicInfoCollapse />
   </div>
 </template>
 
