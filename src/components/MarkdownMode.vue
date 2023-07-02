@@ -24,7 +24,6 @@ export default defineComponent({
         <PreviewSync />
       </a-col>
     </a-row>
-
   </div>
 </template>
 

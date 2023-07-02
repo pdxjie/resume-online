@@ -158,6 +158,10 @@ export default defineComponent({
 ::v-deep .ant-collapse-content-box {
   border: unset!important;
 }
+::v-deep .ant-row {
+  padding: 10px!important;
+  padding-bottom: 0px!important;
+}
 .avatar {
   width: 100%;
   height: 160px;
