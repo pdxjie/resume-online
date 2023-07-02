@@ -75,21 +75,21 @@ export default defineComponent({
             <img :src="resumeLogo" alt="">
             <span class="web-title">艺简</span>
           </div>
-          <a-menu
-            v-if="width > 1000"
-            :selectedKeys="[$route.path]"
-            :default-selected-keys="['1']"
-            theme="light"
-            @click="menuClick"
-            mode="horizontal"
-            :style="{ lineHeight: '64px' }"
-          >
-            <a-menu-item v-for="menu in filterMenu" :key="menu.path">
-              <!-- .vue -->
-              <component :is="$icons[menu.meta.icon]" />
-              {{ menu.meta.title }}
-            </a-menu-item>
-          </a-menu>
+<!--          <a-menu-->
+<!--            v-if="width > 1000"-->
+<!--            :selectedKeys="[$route.path]"-->
+<!--            :default-selected-keys="['1']"-->
+<!--            theme="light"-->
+<!--            @click="menuClick"-->
+<!--            mode="horizontal"-->
+<!--            :style="{ lineHeight: '64px' }"-->
+<!--          >-->
+<!--            <a-menu-item v-for="menu in filterMenu" :key="menu.path">-->
+<!--              &lt;!&ndash; .vue &ndash;&gt;-->
+<!--              <component :is="$icons[menu.meta.icon]" />-->
+<!--              {{ menu.meta.title }}-->
+<!--            </a-menu-item>-->
+<!--          </a-menu>-->
         </div>
       </div>
       <div>
