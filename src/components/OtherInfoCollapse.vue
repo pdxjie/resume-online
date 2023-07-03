@@ -5,7 +5,10 @@ import Vditor from 'vditor'
 import dayjs from 'dayjs'
 import 'vditor/dist/index.css'
 import { message } from 'ant-design-vue'
+import { v4 as uuidv4 } from "uuid"
+import SubMarkdownEditor from "./SubMarkdownEditor"
 export default defineComponent({
+  components: { SubMarkdownEditor },
   props: {
     id: {
       type: String
@@ -44,19 +47,43 @@ export default defineComponent({
       props.otherInfo.edit = !props.otherInfo.edit
     }
     const date = ref([dayjs(props.otherInfo.fromDate, dateFormat), dayjs(props.otherInfo.toDate, dateFormat)])
-    const handleAddCustom = () => {}
-    const sortDown = () => {}
+    const handleAddCustom = () => {
+      const otherInfo = {
+        id: uuidv4(),
+        sort: props.otherInfo.sort + 1,
+        title: '自定义',
+        edit: false,
+        isAppear: true,
+        fromDate: new Date().toString(),
+        toDate: new Date().toString(),
+        toNow: false,
+        isDisable: false,
+        subject: '',
+        major: '',
+        content: '',
+        children: []
+      }
+      let resume = store.state.selectedResumeTemplate
+      resume.otherInfos.forEach(other => {
+        if (other.sort > props.otherInfo.sort) {
+          other.sort += 1
+        }
+      })
+      resume.otherInfos.push(otherInfo)
+      store.commit('CHANGE_RESUME_TEMPLATE', resume)
+    }
     const removeCurrent = () => {}
     const cancel = () => {
       message.info('取消删除')
     }
     const confirm = () => {
       let resume = store.state.selectedResumeTemplate
-      console.log(resume.otherInfos.filter(info => info.id !== props.otherInfo.id))
       resume.otherInfos = resume.otherInfos.filter(info => info.id !== props.otherInfo.id)
       store.commit('CHANGE_RESUME_TEMPLATE', resume)
     }
-    const changeIsAppear = () => {}
+    const changeIsAppear = (val) => {
+      props.otherInfo.isAppear = val
+    }
     const updateToNow = () => {
       props.otherInfo.toDate = '至今'
     }
@@ -65,11 +92,41 @@ export default defineComponent({
       console.log(JSON.stringify(date))
       console.log(dayjs(date[1].toString().substring(0, 10), 'YYYY-MM-DD'), 'date')
     }
+    const sortUp = () => {
+      let resume = store.state.selectedResumeTemplate
+      for (let i = 0; i < resume.otherInfos.length; ++i) {
+        if (resume.otherInfos[i].sort === props.otherInfo.sort - 1) {
+          resume.otherInfos[i].sort += 1
+          break
+        }
+      }
+      if (props.otherInfo.sort > 1) {
+        props.otherInfo.sort -= 1
+      }
+      store.commit('CHANGE_RESUME_TEMPLATE', resume)
+    }
+    const sortDown = () => {
+      let resume = store.state.selectedResumeTemplate
+      for (let i = 0; i < resume.otherInfos.length; ++i) {
+        if (resume.otherInfos[i].sort === props.otherInfo.sort + 1) {
+          resume.otherInfos[i].sort -= 1
+          break
+        }
+      }
+      if (props.otherInfo.sort >= resume.otherInfos.length) {
+        props.otherInfo.sort = resume.otherInfos.length
+      } else {
+        props.otherInfo.sort += 1
+      }
+      store.commit('CHANGE_RESUME_TEMPLATE', resume)
+    }
     return {
       date,
+      store,
       activeKey,
       cancel,
       confirm,
+      sortUp,
       sortDown,
       updateDate,
       updateToNow,
@@ -107,6 +164,9 @@ export default defineComponent({
           </a-row>
           <div :id="id"/>
         </div>
+        <div v-if="otherInfo.children.length !== 0">
+          <SubMarkdownEditor v-for="children in otherInfo.children" :key="children.id" :children="children" :id="children.id"/>
+        </div>
         <template #header>
           <div @click.stop="disExpandCollapse" class="display-flex align-items">
             <span class="font-14 font700 margin-r-10" v-if="!otherInfo.edit">{{ otherInfo.title }}</span>
@@ -118,7 +178,8 @@ export default defineComponent({
           </div>
         </template>
         <template #extra>
-          <arrow-down-outlined style="color:#888888;" @click.stop="sortDown" class="margin-r-10"/>
+          <arrow-up-outlined v-if="otherInfo.sort !== 1" style="color:#888888;" @click.stop="sortUp" class="margin-r-10"/>
+          <arrow-down-outlined v-if="otherInfo.sort !== store.state.selectedResumeTemplate.otherInfos.length" style="color:#888888;" @click.stop="sortDown" class="margin-r-10"/>
           <a-tooltip placement="top">
             <template #title>
               <span>下方添加自定义项</span>

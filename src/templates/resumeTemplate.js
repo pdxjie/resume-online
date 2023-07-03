@@ -65,6 +65,7 @@ export const normalTemplate = {
   otherInfos: [
     {
       id: uuidv4(),
+      sort: 1,
       title: '教育经历',
       edit: false,
       isAppear: true,
@@ -79,6 +80,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 2,
       title: '相关技能',
       edit: false,
       isAppear: true,
@@ -99,6 +101,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 3,
       title: '项目经历',
       edit: false,
       isAppear: true,
@@ -124,6 +127,7 @@ export const normalTemplate = {
       children: [
         {
           id: uuidv4(),
+          sort: 1,
           edit: false,
           isAppear: true,
           isLeaf: true,
@@ -131,8 +135,8 @@ export const normalTemplate = {
           toDate: '2021/01/23',
           toNow: false,
           isDisable: false,
-          subject: '公司甲',
-          major: 'Java后端开发工程师',
+          subject: '公司乙',
+          major: '前端开发工程师',
           content: `
 
   **1、交易链路领域化服务建设（技术负责人 + PM + 核心服务开发）**
@@ -149,6 +153,7 @@ export const normalTemplate = {
         },
         {
           id: uuidv4(),
+          sort: 2,
           edit: false,
           isAppear: true,
           isLeaf: true,
@@ -156,8 +161,8 @@ export const normalTemplate = {
           toDate: '2021/01/23',
           toNow: false,
           isDisable: false,
-          subject: '公司甲',
-          major: 'Java后端开发工程师',
+          subject: '公司丙',
+          major: '全栈开发工程师',
           content: `
 
   **1、交易链路领域化服务建设（技术负责人 + PM + 核心服务开发）**
@@ -176,6 +181,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 4,
       title: '荣誉证书',
       edit: false,
       isAppear: true,
@@ -194,6 +200,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 5,
       title: '个人评价',
       edit: false,
       isAppear: true,
