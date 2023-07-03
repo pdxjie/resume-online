@@ -60,7 +60,7 @@ export default defineComponent({
             <a-row>
               <a-col :span="12" v-for="info in basicInfo.basicInfos || []" :key="info.id">
                 <a-input-group compact class="margin-b-10">
-                  <a-input v-model:value="info.basicKey" style="width: 20%" :placeholder="info.placeholderKey"/>
+                  <a-input v-model:value="info.basicKey" style="width: 25%" :placeholder="info.placeholderKey"/>
                   <a-input v-model:value="info.basicVal" style="width: 60%" :placeholder="info.placeholderVal"/>
                   <a-button @click="removeBasicInfo(info.id)">
                     <template #icon><delete-outlined /></template>
@@ -69,7 +69,7 @@ export default defineComponent({
               </a-col>
               <a-col :span="12">
                 <a-input-group compact class="margin-b-10">
-                  <a-input v-model:value="newInfo.basicKey" style="width: 20%" :placeholder="newInfo.placeholderKey"/>
+                  <a-input v-model:value="newInfo.basicKey" style="width: 25%" :placeholder="newInfo.placeholderKey"/>
                   <a-input v-model:value="newInfo.basicVal" style="width: 60%" :placeholder="newInfo.placeholderVal"/>
                   <a-button @click="addBasicInfo">
                     <template #icon><plus-outlined /></template>
