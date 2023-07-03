@@ -70,7 +70,6 @@ export default defineComponent({
       resume.otherInfos.push(otherInfo)
       store.commit('CHANGE_RESUME_TEMPLATE', resume)
     }
-    const sortDown = () => {}
     const removeCurrent = () => {}
     const cancel = () => {
       message.info('取消删除')
@@ -91,11 +90,41 @@ export default defineComponent({
       console.log(JSON.stringify(date))
       console.log(dayjs(date[1].toString().substring(0, 10), 'YYYY-MM-DD'), 'date')
     }
+    const sortUp = () => {
+      let resume = store.state.selectedResumeTemplate
+      for (let i = 0; i < resume.otherInfos.length; ++i) {
+        if (resume.otherInfos[i].sort === props.otherInfo.sort - 1) {
+          resume.otherInfos[i].sort += 1
+          break
+        }
+      }
+      if (props.otherInfo.sort > 1) {
+        props.otherInfo.sort -= 1
+      }
+      store.commit('CHANGE_RESUME_TEMPLATE', resume)
+    }
+    const sortDown = () => {
+      let resume = store.state.selectedResumeTemplate
+      for (let i = 0; i < resume.otherInfos.length; ++i) {
+        if (resume.otherInfos[i].sort === props.otherInfo.sort + 1) {
+          resume.otherInfos[i].sort -= 1
+          break
+        }
+      }
+      if (props.otherInfo.sort >= resume.otherInfos.length) {
+        props.otherInfo.sort = resume.otherInfos.length
+      } else {
+        props.otherInfo.sort += 1
+      }
+      store.commit('CHANGE_RESUME_TEMPLATE', resume)
+    }
     return {
       date,
+      store,
       activeKey,
       cancel,
       confirm,
+      sortUp,
       sortDown,
       updateDate,
       updateToNow,
@@ -144,7 +173,8 @@ export default defineComponent({
           </div>
         </template>
         <template #extra>
-          <arrow-down-outlined style="color:#888888;" @click.stop="sortDown" class="margin-r-10"/>
+          <arrow-up-outlined v-if="otherInfo.sort !== 1" style="color:#888888;" @click.stop="sortUp" class="margin-r-10"/>
+          <arrow-down-outlined v-if="otherInfo.sort !== store.state.selectedResumeTemplate.otherInfos.length" style="color:#888888;" @click.stop="sortDown" class="margin-r-10"/>
           <a-tooltip placement="top">
             <template #title>
               <span>下方添加自定义项</span>
