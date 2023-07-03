@@ -8,10 +8,13 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const defaultTemplate = computed(() => {
-      return store.state.selectedResumeTemplate
+      const resume = store.state.selectedResumeTemplate
+      resume.otherInfos.sort((a, b) => {
+        return a.sort - b.sort
+      })
+      return resume
     })
     const handleChangeBasicInfo = (n) => {
-      console.log('我接收到了传的值', n)
       store.commit('CHANGE_RESUME_TEMPLATE', n)
     }
     return {

@@ -5,6 +5,7 @@ import Vditor from 'vditor'
 import dayjs from 'dayjs'
 import 'vditor/dist/index.css'
 import { message } from 'ant-design-vue'
+import { v4 as uuidv4 } from "uuid"
 export default defineComponent({
   props: {
     id: {
@@ -44,7 +45,31 @@ export default defineComponent({
       props.otherInfo.edit = !props.otherInfo.edit
     }
     const date = ref([dayjs(props.otherInfo.fromDate, dateFormat), dayjs(props.otherInfo.toDate, dateFormat)])
-    const handleAddCustom = () => {}
+    const handleAddCustom = () => {
+      const otherInfo = {
+        id: uuidv4(),
+        sort: props.otherInfo.sort + 1,
+        title: '自定义',
+        edit: false,
+        isAppear: true,
+        fromDate: new Date().toString(),
+        toDate: new Date().toString(),
+        toNow: false,
+        isDisable: false,
+        subject: '',
+        major: '',
+        content: '',
+        children: []
+      }
+      let resume = store.state.selectedResumeTemplate
+      resume.otherInfos.forEach(other => {
+        if (other.sort > props.otherInfo.sort) {
+          other.sort += 1
+        }
+      })
+      resume.otherInfos.push(otherInfo)
+      store.commit('CHANGE_RESUME_TEMPLATE', resume)
+    }
     const sortDown = () => {}
     const removeCurrent = () => {}
     const cancel = () => {
@@ -52,11 +77,12 @@ export default defineComponent({
     }
     const confirm = () => {
       let resume = store.state.selectedResumeTemplate
-      console.log(resume.otherInfos.filter(info => info.id !== props.otherInfo.id))
       resume.otherInfos = resume.otherInfos.filter(info => info.id !== props.otherInfo.id)
       store.commit('CHANGE_RESUME_TEMPLATE', resume)
     }
-    const changeIsAppear = () => {}
+    const changeIsAppear = (val) => {
+      props.otherInfo.isAppear = val
+    }
     const updateToNow = () => {
       props.otherInfo.toDate = '至今'
     }

@@ -65,6 +65,7 @@ export const normalTemplate = {
   otherInfos: [
     {
       id: uuidv4(),
+      sort: 1,
       title: '教育经历',
       edit: false,
       isAppear: true,
@@ -79,6 +80,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 2,
       title: '相关技能',
       edit: false,
       isAppear: true,
@@ -99,6 +101,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 3,
       title: '项目经历',
       edit: false,
       isAppear: true,
@@ -124,6 +127,7 @@ export const normalTemplate = {
       children: [
         {
           id: uuidv4(),
+          sort: 1,
           edit: false,
           isAppear: true,
           isLeaf: true,
@@ -149,6 +153,7 @@ export const normalTemplate = {
         },
         {
           id: uuidv4(),
+          sort: 2,
           edit: false,
           isAppear: true,
           isLeaf: true,
@@ -176,6 +181,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 4,
       title: '荣誉证书',
       edit: false,
       isAppear: true,
@@ -194,6 +200,7 @@ export const normalTemplate = {
     },
     {
       id: uuidv4(),
+      sort: 5,
       title: '个人评价',
       edit: false,
       isAppear: true,
