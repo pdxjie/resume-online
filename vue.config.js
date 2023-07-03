@@ -8,7 +8,7 @@ module.exports = {
       less: {
         lessOptions: {
           modifyVars: {
-            'primary-color': '#2D6AEA'// 修改全局主题色
+            'primary-color': '#1930a1'// 修改全局主题色
           },
           javascriptEnabled: true
         }

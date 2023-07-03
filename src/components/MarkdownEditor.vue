@@ -12,6 +12,11 @@ export default defineComponent({
       resume.otherInfos.sort((a, b) => {
         return a.sort - b.sort
       })
+      resume.otherInfos.forEach(other => {
+        other.children.sort((a, b) => {
+          return a.sort - b.sort
+        })
+      })
       return resume
     })
     const handleChangeBasicInfo = (n) => {

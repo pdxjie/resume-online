@@ -22,6 +22,7 @@ export default defineComponent({
     onMounted(() => {
       menus = routers.getRoutes()
       filterMenu.value = menus.filter(menu => menu.children.length === 0)
+      console.log(filterMenu, 'routers')
     })
     const handleChange = (tab) => {
       activeKey.value = tab

@@ -79,6 +79,10 @@ export default defineComponent({
     const confirm = () => {
       let resume = store.state.selectedResumeTemplate
       resume.otherInfos = resume.otherInfos.filter(info => info.id !== props.otherInfo.id)
+      // 重新编号
+      resume.otherInfos.forEach((other, index) => {
+        other.sort = index + 1
+      })
       store.commit('CHANGE_RESUME_TEMPLATE', resume)
     }
     const changeIsAppear = (val) => {
@@ -120,6 +124,37 @@ export default defineComponent({
       }
       store.commit('CHANGE_RESUME_TEMPLATE', resume)
     }
+
+    const addChildren = () => {
+      const child = {
+        id: uuidv4(),
+        title: '自定义',
+        edit: false,
+        isAppear: true,
+        fromDate: new Date().toString(),
+        toDate: new Date().toString(),
+        toNow: false,
+        isDisable: false,
+        subject: '',
+        major: '',
+        content: '',
+        children: []
+      }
+      // 判断是否有子集
+      if (props.otherInfo.children.length === 0) {
+        child.sort = 1
+        let children = []
+        children.push(child)
+        props.otherInfo.children = children
+      } else {
+        // 先对子集排序
+        props.otherInfo.children = props.otherInfo.children.sort((a, b) => {
+          return a.sort - b.sort
+        })
+        child.sort = props.otherInfo.children.length + 1
+        props.otherInfo.children.push(child)
+      }
+    }
     return {
       date,
       store,
@@ -129,6 +164,7 @@ export default defineComponent({
       sortUp,
       sortDown,
       updateDate,
+      addChildren,
       updateToNow,
       handleClick,
       allowEditor,
@@ -147,7 +183,7 @@ export default defineComponent({
     <a-collapse v-model:activeKey="activeKey">
       <a-collapse-panel key="1">
         <div>
-          <a-row style="padding-bottom: 5px;background-color: #f6f8fa">
+          <a-row style="padding: 10px 0 5px 0;background-color: #f6f8fa">
             <a-col :xs="2" :sm="4" :md="6" :lg="8" :xl="10" style="padding-left: 10px">
               <label class="font700" style="width: 20%;margin-right: 10px">时间:</label>
               <a-range-picker @change="updateDate" format="YYYY-MM-DD" v-model:value="date" :disabled="otherInfo.isDisable" :placeholder="['开始时间', '结束时间']" style="margin-right: 6px;width: 66%"/>
@@ -159,13 +195,23 @@ export default defineComponent({
             </a-col>
             <a-col :xs="2" :sm="4" :md="6" :lg="8" :xl="7">
               <label class="font700" style="width: 20%;margin-right: 10px">其他:</label>
-              <a-input :disabled="otherInfo.isDisable" v-model:value="otherInfo.major" placeholder="专业/职位/其他" style="width: 80%"/>
+              <a-input :disabled="otherInfo.isDisable" v-model:value="otherInfo.major" placeholder="专业/职位/其他" style="width: 69%"/>
             </a-col>
           </a-row>
-          <div :id="id"/>
+          <div class="display-flex">
+            <div :id="id" />
+            <div style="background-color: #f6f8fa;width: 5%" class="position-relative">
+              <a-tooltip placement="top">
+                <template #title>
+                  <span>添加子项</span>
+                </template>
+                <plus-outlined style="color:#888888;" @click.stop="addChildren" class="position-absolute plus-children"/>
+              </a-tooltip>
+            </div>
+          </div>
         </div>
         <div v-if="otherInfo.children.length !== 0">
-          <SubMarkdownEditor v-for="children in otherInfo.children" :key="children.id" :children="children" :id="children.id"/>
+          <SubMarkdownEditor v-for="children in otherInfo.children" :key="children.id" :parentNode="otherInfo" :children="children" :id="children.id"/>
         </div>
         <template #header>
           <div @click.stop="disExpandCollapse" class="display-flex align-items">
@@ -198,7 +244,6 @@ export default defineComponent({
           <a-switch v-model:checked="otherInfo.isAppear" @change="changeIsAppear" size="small" />
         </template>
       </a-collapse-panel>
-
     </a-collapse>
   </div>
 </template>
@@ -216,6 +261,7 @@ export default defineComponent({
 ::v-deep .vditor {
   height: auto!important;
   border: unset!important;
+  width: 95% !important;
 }
 ::v-deep .ant-collapse-content > .ant-collapse-content-box {
   padding: 0px!important;
@@ -226,5 +272,13 @@ export default defineComponent({
 }
 ::v-deep .vditor-ir pre.vditor-reset:focus {
   background-color: #FFF;
+}
+::v-deep .vditor-content {
+  min-height: 100px!important;
+}
+.plus-children {
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%);
 }
 </style>

@@ -3,12 +3,17 @@ import { defineComponent, onMounted, ref } from "vue"
 import Vditor from 'vditor'
 import dayjs from 'dayjs'
 import 'vditor/dist/index.css'
+import { v4 as uuidv4 } from 'uuid'
+import { message } from 'ant-design-vue'
 export default defineComponent({
   props: {
     id: {
       type: String
     },
     children: {
+      type: Object
+    },
+    parentNode: {
       type: Object
     }
   },
@@ -39,10 +44,73 @@ export default defineComponent({
 
     const updateToNow = () => {}
 
+    const handleAdd = () => {
+      const child = {
+        id: uuidv4(),
+        sort: props.children.sort + 1,
+        title: '自定义',
+        edit: false,
+        isAppear: true,
+        fromDate: new Date().toString(),
+        toDate: new Date().toString(),
+        toNow: false,
+        isDisable: false,
+        subject: '',
+        major: '',
+        content: ''
+      }
+      props.parentNode.children.forEach(c => {
+        if (c.sort > props.children.sort) {
+          c.sort += 1
+        }
+      })
+      props.parentNode.children.push(child)
+    }
+    const sortUp = () => {
+      for (let i = 0; i < props.parentNode.children.length; ++i) {
+        if (props.parentNode.children[i].sort === props.children.sort - 1) {
+          props.parentNode.children[i].sort += 1
+          break
+        }
+      }
+      if (props.children.sort > 1) {
+        props.children.sort -= 1
+      }
+    }
+    const sortDown = () => {
+      for (let i = 0; i < props.parentNode.children.length; ++i) {
+        if (props.parentNode.children[i].sort === props.children.sort + 1) {
+          props.parentNode.children[i].sort -= 1
+          break
+        }
+      }
+      if (props.children.sort >= props.parentNode.children.length) {
+        props.children.sort = props.parentNode.children.length
+      } else {
+        props.children.sort += 1
+      }
+    }
+    const cancel = () => {
+      message.info('取消删除')
+    }
+    const confirm = () => {
+      props.parentNode.children = props.parentNode.children.filter(info => info.id !== props.children.id)
+      // 重新编号
+      props.parentNode.children.forEach((child, index) => {
+        child.sort = index + 1
+      })
+    }
+    const removeCurrent = () => {}
     return {
       date,
+      sortUp,
+      cancel,
+      confirm,
+      sortDown,
+      handleAdd,
       updateDate,
-      updateToNow
+      updateToNow,
+      removeCurrent
     }
   }
 })
@@ -50,7 +118,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <a-row style="padding-bottom: 5px;background-color: #f6f8fa">
+    <a-row style="padding: 10px 0 5px 0;background-color: #f6f8fa">
       <a-col :xs="2" :sm="4" :md="6" :lg="8" :xl="10" style="padding-left: 10px">
         <label class="font700" style="width: 20%;margin-right: 10px">时间:</label>
         <a-range-picker @change="updateDate" format="YYYY-MM-DD" v-model:value="date" :disabled="children.isDisable" :placeholder="['开始时间', '结束时间']" style="margin-right: 6px;width: 66%"/>
@@ -62,12 +130,48 @@ export default defineComponent({
       </a-col>
       <a-col :xs="2" :sm="4" :md="6" :lg="8" :xl="7">
         <label class="font700" style="width: 20%;margin-right: 10px">其他:</label>
-        <a-input :disabled="children.isDisable" v-model:value="children.major" placeholder="专业/职位/其他" style="width: 80%"/>
+        <a-input :disabled="children.isDisable" v-model:value="children.major" placeholder="专业/职位/其他" style="width: 69%"/>
       </a-col>
     </a-row>
-    <div :id="children.id"/>
+    <div class="display-flex">
+      <div :id="id" />
+      <div style="background-color: #f6f8fa;width: 5%" class="position-relative">
+        <div class="position-absolute plus-children">
+          <arrow-up-outlined v-if="children.sort !== 1" style="color:#888888;" @click.stop="sortUp" class="margin-r-10"/>
+          <arrow-down-outlined v-if="children.sort !== parentNode.children.length" style="color:#888888;" @click.stop="sortDown" class="margin-r-10"/>
+          <a-tooltip placement="top">
+            <template #title>
+              <span>添加同级项</span>
+            </template>
+            <plus-outlined style="color:#888888;" @click.stop="handleAdd"/>
+          </a-tooltip>
+          <a-popconfirm
+            title="你确定要删除当前项?"
+            ok-text="确认"
+            cancel-text="取消"
+            @confirm="confirm"
+            @cancel="cancel"
+          >
+            <delete-outlined style="color:#888888;" @click.stop="removeCurrent" class="margin-r-10"/>
+          </a-popconfirm>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
+::v-deep .vditor {
+  height: auto!important;
+  border: unset!important;
+  width: 95% !important;
+}
+.plus-children {
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%);
+}
+::v-deep .vditor-content {
+  min-height: 100px!important;
+}
 </style>
