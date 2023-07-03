@@ -6,7 +6,9 @@ import dayjs from 'dayjs'
 import 'vditor/dist/index.css'
 import { message } from 'ant-design-vue'
 import { v4 as uuidv4 } from "uuid"
+import SubMarkdownEditor from "./SubMarkdownEditor"
 export default defineComponent({
+  components: { SubMarkdownEditor },
   props: {
     id: {
       type: String
@@ -161,6 +163,9 @@ export default defineComponent({
             </a-col>
           </a-row>
           <div :id="id"/>
+        </div>
+        <div v-if="otherInfo.children.length !== 0">
+          <SubMarkdownEditor v-for="children in otherInfo.children" :key="children.id" :children="children" :id="children.id"/>
         </div>
         <template #header>
           <div @click.stop="disExpandCollapse" class="display-flex align-items">

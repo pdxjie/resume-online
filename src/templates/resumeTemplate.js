@@ -135,8 +135,8 @@ export const normalTemplate = {
           toDate: '2021/01/23',
           toNow: false,
           isDisable: false,
-          subject: '公司甲',
-          major: 'Java后端开发工程师',
+          subject: '公司乙',
+          major: '前端开发工程师',
           content: `
 
   **1、交易链路领域化服务建设（技术负责人 + PM + 核心服务开发）**
@@ -161,8 +161,8 @@ export const normalTemplate = {
           toDate: '2021/01/23',
           toNow: false,
           isDisable: false,
-          subject: '公司甲',
-          major: 'Java后端开发工程师',
+          subject: '公司丙',
+          major: '全栈开发工程师',
           content: `
 
   **1、交易链路领域化服务建设（技术负责人 + PM + 核心服务开发）**
