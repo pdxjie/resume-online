@@ -1,9 +1,23 @@
 <script>
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onMounted, createApp } from 'vue'
 import { useStore } from 'vuex'
 export default defineComponent({
   setup () {
     const store = useStore()
+    onMounted(() => {
+      let str = '<div style="color: red"> 你好啊</div>'
+      var Profile = defineComponent({
+        template: str,
+        setup () {
+          const resumeData = store.state.selectedResumeTemplate
+          return {
+            resumeData
+          }
+        }
+      })
+      const app = createApp(Profile)
+      app.mount('#preview-async')
+    })
     const resumeTemplate = computed(() => {
       return store.state.selectedResumeTemplate
     })
@@ -16,8 +30,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="preview-async">
-    {{ resumeTemplate }}
+  <div id="preview-async">
   </div>
 </template>
 

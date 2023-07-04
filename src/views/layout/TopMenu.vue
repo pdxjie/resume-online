@@ -148,8 +148,8 @@ export default defineComponent({
     align-items: center;
     margin-right: 25px;
     img {
-      width: 35px;
-      height: 35px;
+      width: 50px;
+      height: 50px;
       margin-right: 10px;
     }
     .web-title {
