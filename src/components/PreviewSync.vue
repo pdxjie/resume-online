@@ -30,7 +30,6 @@ export default defineComponent({
 
 <template>
   <div class="preview-async">
-    {{ resumeTemplate }}
     <div id="tpl_box" class="tpl_box" data-v-236d5b80="">
       <div class="tpl_main" data-v-236d5b80="">
         <div id="resume_tpl_box" data-v-236d5b80="" >
@@ -43,30 +42,10 @@ export default defineComponent({
                     <div>
                       <div style="font-size: 22px;font-weight: 700">{{ resumeTemplate.basicInfo.basicInfos[0].basicVal }}</div>
                       <div style="width: 85%;flex-wrap: wrap" class="display-flex align-items">
-                        <div class="display-flex margin-t-10" style="width: 30%" v-for="(basicInfo, index) in resumeTemplate.basicInfo.basicInfos" :key="basicInfo.id">
-                          <div v-if="basicInfo.basicKey.length === 2 && index !== 0">{{ basicInfo.basicKey[0] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ basicInfo.basicKey[1] }}：</div>
-                          <div v-if="basicInfo.basicKey.length === 2 && index !== 0">{{ basicInfo.basicKey }}：</div>
+                        <div class="display-flex margin-t-10" style="width: 30%" v-for="(basicInfo) in resumeTemplate.basicInfo.basicInfos.slice(1)" :key="basicInfo.id">
+                          <div v-if="basicInfo.basicKey.length === 2">{{ basicInfo.basicKey[0] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ basicInfo.basicKey[1] }}：</div>
+                          <div v-if="basicInfo.basicKey.length !== 2">{{ basicInfo.basicKey }}：</div>
                           <div >{{ basicInfo.basicVal }}</div>
-                        </div>
-                        <div class="display-flex margin-t-10" style="width: 30%">
-                          <div>专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：</div>
-                          <div>软件工程</div>
-                        </div>
-                        <div class="display-flex margin-t-10" style="width: 30%">
-                          <div>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</div>
-                          <div>12345678911</div>
-                        </div>
-                        <div class="display-flex margin-t-10" style="width: 30%">
-                          <div>工作年限：</div>
-                          <div>1 ~ 3年</div>
-                        </div>
-                        <div class="display-flex margin-t-10" style="width: 30%">
-                          <div>个人网站：</div>
-                          <div>https://www.666.com</div>
-                        </div>
-                        <div class="display-flex margin-t-10" style="width: 30%">
-                          <div>GitHub：</div>
-                          <div>https://www.github.xxx.com</div>
                         </div>
                       </div>
                     </div>
@@ -76,30 +55,46 @@ export default defineComponent({
                   </div>
                   <div class="resume_content_all" style="margin:0 30px 0;"
                        data-v-2e658a64="">
-                    <div id="jiaoyu" class="resume_content" style="margin-top:30px;"
-                         data-v-2e658a64="">
+                    <div id="jiaoyu" class="resume_content" style="margin-top:30px;" v-for="other in resumeTemplate.otherInfos" data-v-2e658a64="">
                       <div class="resume_content_main" data-v-2e658a64="">
                         <div class="module_tit"
                              style="font-size:16px;color:#284967;border-color:#284967;"
-                             data-v-2e658a64=""><span data-v-2e658a64="">教育背景</span>
+                             data-v-2e658a64=""><span data-v-2e658a64="">{{ other.title }}</span>
                         </div>
                         <div class="content_list" style="margin-top:16px;"
                              data-v-2e658a64="">
                           <ul class="list_top" style="font-size:13px;"
                               data-v-2e658a64="">
-                            <li style="list-style: none;" class="time" data-v-2e658a64="">2012-09 ~ 2016-07</li>
-                            <li style="list-style: none;" class="name" data-v-2e658a64="">
-                              <b data-v-2e658a64="">英才简历师范大学</b>
+                            <li v-if="other.fromDate && other.toDate" style="list-style: none;" class="time" data-v-2e658a64="">{{ other.fromDate }} ~ {{ other.toDate }}</li>
+                            <li v-if="other.subject" style="list-style: none;" class="name" data-v-2e658a64="">
+                              <b data-v-2e658a64="">{{ other.subject }}</b>
                             </li>
-                            <li style="list-style: none;" data-v-2e658a64="">
-                              工商管理（<b data-v-2e658a64="">本科</b>）
+                            <li v-if="other.major" style="list-style: none;" data-v-2e658a64="">
+                              {{ other.major }}
                             </li>
                           </ul>
                           <div class="ql-editor" style="font-size:13px;margin-top:7px;line-height:1.7;" data-v-2e658a64="">
-                            <p><strong>专业成绩：</strong>GPA 3.66/4 （专业前5%）</p>
-                            <p>
-                              <strong>主修课程：</strong>基础会计学、货币银行学、统计学、经济法概论、财务会计学、管理学原理、组织行为学、市场营销学、国际贸易理论、国际贸易实务、人力资源开发与管理、财务管理学、企业经营战略概论、质量管理学、西方经济学等等。
-                            </p>
+                            <div v-html="other.content"></div>
+                          </div>
+                        </div>
+                        <div v-if="other.children.length !== 0">
+                          <div v-for="child in other.children">
+                            <div class="content_list" style="margin-top:16px;"
+                                 data-v-2e658a64="">
+                              <ul class="list_top" style="font-size:13px;"
+                                  data-v-2e658a64="">
+                                <li v-if="child.fromDate && child.toDate" style="list-style: none;" class="time" data-v-2e658a64="">{{ child.fromDate }} ~ {{ child.toDate }}</li>
+                                <li v-if="child.subject" style="list-style: none;" class="name" data-v-2e658a64="">
+                                  <b data-v-2e658a64="">{{ child.subject }}</b>
+                                </li>
+                                <li v-if="child.major" style="list-style: none;" data-v-2e658a64="">
+                                  {{ child.major }}
+                                </li>
+                              </ul>
+                              <div class="ql-editor" style="font-size:13px;margin-top:7px;line-height:1.7;" data-v-2e658a64="">
+                                <div v-html="child.content"></div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
