@@ -19,10 +19,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div id="preview-async">
+  <div class="preview-async">
     <div id="tpl_box" class="tpl_box" data-v-236d5b80="">
-      <div class="tpl_main" data-v-236d5b80=""><!---->
-        <div id="resume_tpl_box" data-v-236d5b80="" style="height: 1160px;">
+      <div class="tpl_main" data-v-236d5b80="">
+        <!-- style="height: 1160px;" -->
+        <div id="resume_tpl_box" data-v-236d5b80="" >
           <div class="resume_all" data-v-2e658a64="" data-v-236d5b80="">
             <div id="resume_pc" class="pc_main" data-v-2e658a64="">
               <div class="weiruanyahei" data-v-2e658a64="">
@@ -37,8 +38,7 @@ export default defineComponent({
                         data-v-2e658a64="">一个月内到岗</span></dd>
                       <dd style="font-size:13px;line-height:14px;" data-v-2e658a64="">
                         <span data-v-2e658a64="">32岁</span><span data-v-2e658a64="">男</span>
-                        <!----><!----><!----><!----><!----><!----><span
-                        data-v-2e658a64="">6年经验</span></dd>
+                        <span data-v-2e658a64="">6年经验</span></dd>
                       <dd style="font-size:13px;line-height:14px;" data-v-2e658a64="">
                         <span data-v-2e658a64="">15999999999</span><span
                         data-v-2e658a64="">ycresume@qq.com</span></dd>
@@ -161,9 +161,6 @@ export default defineComponent({
                                     <!----></div>
                                 </div>
                               </div>
-                              <div class="el-progress__text"
-                                   style="font-size: 14.4px;">95%
-                              </div>
                             </div>
                             <p data-v-2e658a64="" style="font-size: 13px;">
                               计算机</p><span data-v-2e658a64=""
@@ -181,11 +178,8 @@ export default defineComponent({
                                      style="height: 6px;">
                                   <div class="el-progress-bar__inner"
                                        style="width: 65%; background-color: rgb(90, 123, 153);">
-                                    <!----></div>
+                                  </div>
                                 </div>
-                              </div>
-                              <div class="el-progress__text"
-                                   style="font-size: 14.4px;">65%
                               </div>
                             </div>
                             <p data-v-2e658a64="" style="font-size: 13px;">
@@ -209,7 +203,8 @@ export default defineComponent({
                             <li>英语四级，听说读写能力良好，能流利的用英语进行日常交流，能快速浏览英文文档和书籍；</li>
                             <li>通过全国计算机二级考试，熟练运用office等常用的办公软件。</li>
                           </ul>
-                        </div><!----></div>
+                        </div>
+                      </div>
                     </div>
                     <div id="pingjia" class="resume_content" style="margin-top:30px;"
                          data-v-2e658a64="">
@@ -224,20 +219,14 @@ export default defineComponent({
                           工作积极认真，细心负责，熟练运用办公自动化软件，善于在工作中提出问题、发现问题、解决问题，有较强的分析能力；勤奋好学，踏实肯干，动手能力强，认真负责，有很强的社会责任感；坚毅不拔，吃苦耐劳，喜欢迎接新挑战。</p>
                         </div>
                       </div>
-                    </div><!----><!----></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div id="zijianxin_tpl_box" data-v-236d5b80=""><!----></div>
-        <ul class="page_line" data-v-236d5b80="">
-          <li data-v-236d5b80=""><!---->
-            <div class="page_num" data-v-236d5b80="">
-              第1页 (共<b class="orange" data-v-236d5b80="">1</b>页)
-              <!----></div>
-          </li>
-        </ul>
+        <div id="zijianxin_tpl_box" data-v-236d5b80=""></div>
       </div>
     </div>
   </div>
@@ -248,8 +237,10 @@ export default defineComponent({
   width: 100%;
   height: calc(100vh - 120px);
   overflow: auto;
+  background-color: rgba(0, 0, 0, .6);
   border-radius: 8px;
   margin-top: 10px;
+  border: 2px dotted #eee;
   padding: 50px;
 
 }
@@ -2877,11 +2868,13 @@ export default defineComponent({
   .edit_resume .edit_header .edit_header_main .set_list li .click_btn[data-v-236d5b80], .edit_resume .edit_header .edit_header_main .set_list li .set_btn[data-v-236d5b80] {
     padding: 10px 15px 0
   }
-}</style>
-<style type="text/css">@font-face {
-  font-family: qmfont;
-  src: url(/_nuxt/fonts/iconfont.56b43b6.woff2) format("woff2"), url(/_nuxt/fonts/iconfont.9ddeb81.woff) format("woff"), url(/_nuxt/fonts/iconfont.b762e9d.ttf) format("truetype")
 }
+</style>
+<style type="text/css">
+/*@font-face {*/
+/*  font-family: qmfont;*/
+/*  src: url(/_nuxt/fonts/iconfont.56b43b6.woff2) format("woff2"), url(/_nuxt/fonts/iconfont.9ddeb81.woff) format("woff"), url(/_nuxt/fonts/iconfont.b762e9d.ttf) format("truetype")*/
+/*}*/
 
 .qmfont {
   font-family: qmfont !important;
