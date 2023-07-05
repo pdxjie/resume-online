@@ -8,6 +8,7 @@ import 'ant-design-vue/dist/antd.less'
 import '@/styles/common.less'
 import * as Icons from '@ant-design/icons-vue'
 import '@/assets/css/font.css'
+import '@/assets/css/markdown.min.css'
 import hevueImgPreview from 'hevue-img-preview'
 const app = createApp(App)
 
