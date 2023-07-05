@@ -1,5 +1,6 @@
 <script>
 import { computed, defineComponent, ref } from 'vue'
+import marked from 'marked'
 import ikun from '@/assets/images/ikun.jpg'
 import { useStore } from 'vuex'
 export default defineComponent({
@@ -7,7 +8,16 @@ export default defineComponent({
     const store = useStore()
     const ikunImg = ref(ikun)
     const resumeTemplate = computed(() => {
-      return store.state.selectedResumeTemplate
+      const resume = store.state.selectedResumeTemplate
+      resume.otherInfos.forEach(other => {
+        other.content = marked(other.content)
+        if (other.children.length !== 0) {
+          other.children.forEach(child => {
+            child.content = marked(child.content)
+          })
+        }
+      })
+      return resume
     })
     return {
       resumeTemplate,
@@ -20,35 +30,52 @@ export default defineComponent({
 
 <template>
   <div class="preview-async">
+    {{ resumeTemplate }}
     <div id="tpl_box" class="tpl_box" data-v-236d5b80="">
       <div class="tpl_main" data-v-236d5b80="">
-        <!-- style="height: 1160px;" -->
         <div id="resume_tpl_box" data-v-236d5b80="" >
           <div class="resume_all" data-v-2e658a64="" data-v-236d5b80="">
             <div id="resume_pc" class="pc_main" data-v-2e658a64="">
               <div class="weiruanyahei" data-v-2e658a64="">
                 <div class="resume_box" data-v-2e658a64="">
-                  <div id="basicInfo" class="basic_info_box"
-                       style="padding:28px 30px 20px;" data-v-2e658a64="">
-                    <dl class="basic_info" data-v-2e658a64="">
-                      <dt id="myname" data-v-2e658a64="">你的名字</dt>
-                      <dd class="yixiang_tip" style="font-size:13px;line-height:14px;"
-                          data-v-2e658a64=""><span data-v-2e658a64="">求职意向：行政专员</span><span
-                        data-v-2e658a64="">武汉</span><span data-v-2e658a64="">5000/月</span><span
-                        data-v-2e658a64="">一个月内到岗</span></dd>
-                      <dd style="font-size:13px;line-height:14px;" data-v-2e658a64="">
-                        <span data-v-2e658a64="">32岁</span><span data-v-2e658a64="">男</span>
-                        <span data-v-2e658a64="">6年经验</span></dd>
-                      <dd style="font-size:13px;line-height:14px;" data-v-2e658a64="">
-                        <span data-v-2e658a64="">15999999999</span><span
-                        data-v-2e658a64="">ycresume@qq.com</span></dd>
-                    </dl>
-                    <div class="photo_box" style="right:50px;" data-v-2e658a64=""><img
-                      :src="ikunImg" width="100%" alt=""
-                      data-v-2e658a64=""></div>
+                  <div id="basicInfo" class="basic_info_box" style="padding:28px 30px 20px;" data-v-2e658a64="">
+                    <!-- 基础信息 -->
+                    <div>
+                      <div style="font-size: 22px;font-weight: 700">{{ resumeTemplate.basicInfo.basicInfos[0].basicVal }}</div>
+                      <div style="width: 85%;flex-wrap: wrap" class="display-flex align-items">
+                        <div class="display-flex margin-t-10" style="width: 30%" v-for="(basicInfo, index) in resumeTemplate.basicInfo.basicInfos" :key="basicInfo.id">
+                          <div v-if="basicInfo.basicKey.length === 2 && index !== 0">{{ basicInfo.basicKey[0] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ basicInfo.basicKey[1] }}：</div>
+                          <div v-if="basicInfo.basicKey.length === 2 && index !== 0">{{ basicInfo.basicKey }}：</div>
+                          <div >{{ basicInfo.basicVal }}</div>
+                        </div>
+                        <div class="display-flex margin-t-10" style="width: 30%">
+                          <div>专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：</div>
+                          <div>软件工程</div>
+                        </div>
+                        <div class="display-flex margin-t-10" style="width: 30%">
+                          <div>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</div>
+                          <div>12345678911</div>
+                        </div>
+                        <div class="display-flex margin-t-10" style="width: 30%">
+                          <div>工作年限：</div>
+                          <div>1 ~ 3年</div>
+                        </div>
+                        <div class="display-flex margin-t-10" style="width: 30%">
+                          <div>个人网站：</div>
+                          <div>https://www.666.com</div>
+                        </div>
+                        <div class="display-flex margin-t-10" style="width: 30%">
+                          <div>GitHub：</div>
+                          <div>https://www.github.xxx.com</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="photo_box" style="right:50px;" data-v-2e658a64="">
+                      <img :src="ikunImg" style="width: 100%;height: auto" alt="" data-v-2e658a64="">
+                    </div>
                   </div>
                   <div class="resume_content_all" style="margin:0 30px 0;"
-                       data-v-2e658a64=""><!---->
+                       data-v-2e658a64="">
                     <div id="jiaoyu" class="resume_content" style="margin-top:30px;"
                          data-v-2e658a64="">
                       <div class="resume_content_main" data-v-2e658a64="">
@@ -60,163 +87,20 @@ export default defineComponent({
                              data-v-2e658a64="">
                           <ul class="list_top" style="font-size:13px;"
                               data-v-2e658a64="">
-                            <li class="time" data-v-2e658a64="">2012-09 ~
-                              2016-07
+                            <li style="list-style: none;" class="time" data-v-2e658a64="">2012-09 ~ 2016-07</li>
+                            <li style="list-style: none;" class="name" data-v-2e658a64="">
+                              <b data-v-2e658a64="">英才简历师范大学</b>
                             </li>
-                            <li class="name" data-v-2e658a64=""><b
-                              data-v-2e658a64="">英才简历师范大学</b></li>
-                            <li data-v-2e658a64="">
+                            <li style="list-style: none;" data-v-2e658a64="">
                               工商管理（<b data-v-2e658a64="">本科</b>）
                             </li>
                           </ul>
-                          <div class="ql-editor"
-                               style="font-size:13px;margin-top:7px;line-height:1.7;"
-                               data-v-2e658a64=""><p><strong>专业成绩：</strong>GPA
-                            3.66/4 （专业前5%）</p>
-                            <p><strong>主修课程：</strong>基础会计学、货币银行学、统计学、经济法概论、财务会计学、管理学原理、组织行为学、市场营销学、国际贸易理论、国际贸易实务、人力资源开发与管理、财务管理学、企业经营战略概论、质量管理学、西方经济学等等。
-                            </p></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="work" class="resume_content" style="margin-top:30px;"
-                         data-v-2e658a64="">
-                      <div class="resume_content_main" data-v-2e658a64="">
-                        <div class="module_tit"
-                             style="font-size:16px;color:#284967;border-color:#284967;"
-                             data-v-2e658a64=""><span data-v-2e658a64="">工作经验</span>
-                        </div>
-                        <div class="content_list" style="margin-top:16px;"
-                             data-v-2e658a64="">
-                          <ul class="list_top" style="font-size:13px;"
-                              data-v-2e658a64="">
-                            <li class="time" data-v-2e658a64="">2018-09 ~ 至今
-                            </li>
-                            <li class="name" data-v-2e658a64=""><b
-                              data-v-2e658a64="">英才简历科技有限公司</b></li>
-                            <li data-v-2e658a64="">行政专员</li>
-                          </ul>
-                          <div class="ql-editor"
-                               style="font-size:13px;margin-top:7px;line-height:1.7;"
-                               data-v-2e658a64="">
-                            <ul>
-                              <li>
-                                拥负责本部的行政人事管理和日常事务，协助总监搞好各部门之间的综合协调，落实公司规章制度，沟通内外联系，保证上情下达和下情上报，负责对会议文件决定的事项进行催办、查办和落实，负责全公司组织系统研讨和修订。
-                              </li>
-                              <li>编制公司人事管理制度，规避各项人事风险。</li>
-                            </ul>
+                          <div class="ql-editor" style="font-size:13px;margin-top:7px;line-height:1.7;" data-v-2e658a64="">
+                            <p><strong>专业成绩：</strong>GPA 3.66/4 （专业前5%）</p>
+                            <p>
+                              <strong>主修课程：</strong>基础会计学、货币银行学、统计学、经济法概论、财务会计学、管理学原理、组织行为学、市场营销学、国际贸易理论、国际贸易实务、人力资源开发与管理、财务管理学、企业经营战略概论、质量管理学、西方经济学等等。
+                            </p>
                           </div>
-                        </div>
-                        <div data-v-2e658a64="" class="content_list"
-                             style="margin-top: 16px;">
-                          <ul data-v-2e658a64="" class="list_top"
-                              style="font-size: 13px;">
-                            <li data-v-2e658a64="" class="time">2016-09 ~
-                              2018-08
-                            </li>
-                            <li data-v-2e658a64="" class="name"><b
-                              data-v-2e658a64="">武汉述才网络科技有限公司</b></li>
-                            <li data-v-2e658a64="">行政助理</li>
-                          </ul>
-                          <div data-v-2e658a64="" class="ql-editor"
-                               style="font-size: 13px; margin-top: 7px; line-height: 1.7;">
-                            <ul>
-                              <li>负责中心简单财务管理，资产管控；</li>
-                              <li>负责公司总部的来访客户接待工作，负责引导和介绍公司的分布情况；</li>
-                              <li>负责中心的行政事务，公司班车管理、负责建立员工归属感及前台管理；</li>
-                              <li>负责招聘工作，确保人才梯队发展和人才储备及培养。</li>
-                              <li>督导公司各项行政、人事制度、员工福利、生日以及公司各种宴会活动的执行。</li>
-                              <li>负责招聘工作，制定公司的人力资源发展计划，确保人才梯队发展和人才储备及培养。</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div><!----><!----><!---->
-                    <div id="jineng" class="resume_content" style="margin-top:30px;"
-                         data-v-2e658a64="">
-                      <div class="resume_content_main" data-v-2e658a64="">
-                        <div class="module_tit"
-                             style="font-size:16px;color:#284967;border-color:#284967;"
-                             data-v-2e658a64=""><span data-v-2e658a64="">技能特长</span>
-                        </div>
-                        <div class="ql-editor"
-                             style="font-size:13px;margin-top:16px;line-height:1.7;"
-                             data-v-2e658a64=""><p><strong>语言能力：</strong>大学英语6级证书，荣获全国大学生英语竞赛一等奖，能够熟练的进行交流、读写。
-                        </p>
-                          <p><strong>计算机：</strong>计算机二级证书，熟练操作windows平台上的各类应用软件，如Word、Excel。
-                          </p>
-                          <p><strong>团队能力：</strong>具有丰富的团队组建与扩充经验和项目管理与协调经验，能够独挡一面。
-                          </p></div>
-                        <ul data-v-2e658a64="" class="jineng_list">
-                          <li data-v-2e658a64="" class="is_text"
-                              style="margin-top: 16px;">
-                            <div data-v-2e658a64="" role="progressbar"
-                                 aria-valuenow="95" aria-valuemin="0"
-                                 aria-valuemax="100"
-                                 class="el-progress jineng_progress el-progress--line">
-                              <div class="el-progress-bar">
-                                <div class="el-progress-bar__outer"
-                                     style="height: 6px;">
-                                  <div class="el-progress-bar__inner"
-                                       style="width: 95%; background-color: rgb(90, 123, 153);">
-                                    <!----></div>
-                                </div>
-                              </div>
-                            </div>
-                            <p data-v-2e658a64="" style="font-size: 13px;">
-                              计算机</p><span data-v-2e658a64=""
-                                           class="shuliandu"
-                                           style="font-size: 12px;">精通</span>
-                          </li>
-                          <li data-v-2e658a64="" class="is_text"
-                              style="margin-top: 16px;">
-                            <div data-v-2e658a64="" role="progressbar"
-                                 aria-valuenow="65" aria-valuemin="0"
-                                 aria-valuemax="100"
-                                 class="el-progress jineng_progress el-progress--line">
-                              <div class="el-progress-bar">
-                                <div class="el-progress-bar__outer"
-                                     style="height: 6px;">
-                                  <div class="el-progress-bar__inner"
-                                       style="width: 65%; background-color: rgb(90, 123, 153);">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <p data-v-2e658a64="" style="font-size: 13px;">
-                              英语</p><span data-v-2e658a64="" class="shuliandu"
-                                          style="font-size: 12px;">良好</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div id="zhengshu" class="resume_content" style="margin-top:30px;"
-                         data-v-2e658a64="">
-                      <div class="resume_content_main" data-v-2e658a64="">
-                        <div class="module_tit"
-                             style="font-size:16px;color:#284967;border-color:#284967;"
-                             data-v-2e658a64=""><span data-v-2e658a64="">荣誉证书</span>
-                        </div>
-                        <div class="ql-editor"
-                             style="font-size:13px;margin-top:16px;line-height:1.7;"
-                             data-v-2e658a64="">
-                          <ul>
-                            <li>英语四级，听说读写能力良好，能流利的用英语进行日常交流，能快速浏览英文文档和书籍；</li>
-                            <li>通过全国计算机二级考试，熟练运用office等常用的办公软件。</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="pingjia" class="resume_content" style="margin-top:30px;"
-                         data-v-2e658a64="">
-                      <div class="resume_content_main" data-v-2e658a64="">
-                        <div class="module_tit"
-                             style="font-size:16px;color:#284967;border-color:#284967;"
-                             data-v-2e658a64=""><span data-v-2e658a64="">自我评价</span>
-                        </div>
-                        <div class="ql-editor"
-                             style="font-size:13px;margin-top:16px;line-height:1.7;"
-                             data-v-2e658a64=""><p>
-                          工作积极认真，细心负责，熟练运用办公自动化软件，善于在工作中提出问题、发现问题、解决问题，有较强的分析能力；勤奋好学，踏实肯干，动手能力强，认真负责，有很强的社会责任感；坚毅不拔，吃苦耐劳，喜欢迎接新挑战。</p>
                         </div>
                       </div>
                     </div>
@@ -226,7 +110,6 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        <div id="zijianxin_tpl_box" data-v-236d5b80=""></div>
       </div>
     </div>
   </div>
@@ -241,7 +124,7 @@ export default defineComponent({
   border-radius: 8px;
   margin-top: 10px;
   border: 2px dotted #eee;
-  padding: 50px;
+  padding: 80px;
 
 }
 .vue-cropper[data-v-6dae58fd] {
@@ -474,14 +357,12 @@ export default defineComponent({
     right: -10px;
   }
 }
-</style>
-<style type="text/css"></style>
-<style type="text/css">.edit_resume[data-v-236d5b80] {
-                        background-color: #39394d;
-                        padding-bottom: 450px;
-                        padding-top: 70px;
-                        min-width: 1200px
-                      }
+.edit_resume[data-v-236d5b80] {
+  background-color: #39394d;
+  padding-bottom: 450px;
+  padding-top: 70px;
+  min-width: 1200px;
+}
 
 .edit_resume .edit_header[data-v-236d5b80] {
   position: fixed;
@@ -2869,13 +2750,6 @@ export default defineComponent({
     padding: 10px 15px 0
   }
 }
-</style>
-<style type="text/css">
-/*@font-face {*/
-/*  font-family: qmfont;*/
-/*  src: url(/_nuxt/fonts/iconfont.56b43b6.woff2) format("woff2"), url(/_nuxt/fonts/iconfont.9ddeb81.woff) format("woff"), url(/_nuxt/fonts/iconfont.b762e9d.ttf) format("truetype")*/
-/*}*/
-
 .qmfont {
   font-family: qmfont !important;
   font-size: 16px;
@@ -3032,12 +2906,6 @@ export default defineComponent({
   content: "\E617"
 }
 
-/*!
- * Quill Editor v1.3.7
- * https://quilljs.com/
- * Copyright (c) 2014, Jason Chen
- * Copyright (c) 2013, salesforce.com
- */
 .ql-container {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -4240,14 +4108,14 @@ export default defineComponent({
   position: absolute !important;
   left: 50% !important;
   top: 70px !important
-}</style>
-<style type="text/css">.resume_all .pc_main .resume_box[data-v-2e658a64] {
-                        position: relative;
-                        padding-bottom: 2px;
-                        min-height: 1150px;
-                        color: #333;
-                        background-color: #fff
-                      }
+}
+.resume_all .pc_main .resume_box[data-v-2e658a64] {
+  position: relative;
+  padding-bottom: 2px;
+  min-height: 1150px;
+  color: #333;
+  background-color: #fff
+}
 
 .resume_all .pc_main .resume_box .basic_info_box[data-v-2e658a64] {
   padding: 26px 40px 20px;
@@ -4466,13 +4334,13 @@ export default defineComponent({
 
 .resume_all .pc_main .text_long .list_top li[data-v-2e658a64]:first-child {
   float: left !important
-}</style>
-<style type="text/css">.qm_editor[data-v-73ef5012] {
-                        background-color: #f3f4f6;
-                        border-radius: 10px;
-                        overflow: hidden;
-                        border: 1px solid #ddd !important
-                      }
+}
+.qm_editor[data-v-73ef5012] {
+  background-color: #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd !important
+}
 
 .qm_editor[data-v-73ef5012]:hover {
   border-color: #1467cc !important
@@ -4485,10 +4353,10 @@ export default defineComponent({
   border-top: 1px solid #ddd !important;
   white-space: pre-wrap;
   overflow-y: scroll
-}</style>
-<style type="text/css">.qm_editor .ql-editor ol, .qm_editor .ql-editor ul {
-                        padding-left: 0
-                      }
+}
+.qm_editor .ql-editor ol, .qm_editor .ql-editor ul {
+  padding-left: 0
+}
 
 .qm_editor .ql-editor.ql-blank:before {
   font-style: normal
@@ -4512,16 +4380,16 @@ export default defineComponent({
 
 .qm_editor .ql-snow .ql-picker-options .ql-picker-item {
   padding: 0
-}</style>
-<style type="text/css">.change_muban .swiper-container[data-v-092e5628] {
-                        opacity: 0;
-                        z-index: -1;
-                        padding: 20px;
-                        width: 100%;
-                        max-width: 132vh;
-                        margin: 0 auto;
-                        position: relative
-                      }
+}
+.change_muban .swiper-container[data-v-092e5628] {
+  opacity: 0;
+  z-index: -1;
+  padding: 20px;
+  width: 100%;
+  max-width: 132vh;
+  margin: 0 auto;
+  position: relative
+}
 
 .change_muban .swiper-container .swiper-slide[data-v-092e5628] {
   height: calc(100vh - 90px);
@@ -4766,8 +4634,8 @@ export default defineComponent({
     margin-top: 40px;
     margin-bottom: 0
   }
-}</style>
-<style type="text/css">.change_muban .el-dialog {
+}
+.change_muban .el-dialog {
                         border-radius: 5px;
                         overflow: hidden
                       }
@@ -4785,11 +4653,11 @@ export default defineComponent({
 .change_muban .el-dialog .el-dialog__footer {
   padding-bottom: 40px;
   text-align: center
-}</style>
-<style type="text/css">.review_all .review_list[data-v-2bb184da] {
-                        padding-bottom: 30px;
-                        text-align: center
-                      }
+}
+.review_all .review_list[data-v-2bb184da] {
+  padding-bottom: 30px;
+  text-align: center
+}
 
 .review_all .review_list p[data-v-2bb184da] {
   font-size: 15px
@@ -4813,23 +4681,23 @@ export default defineComponent({
 .review_all .review_list .ptb0[data-v-2bb184da] {
   padding-top: 0;
   padding-bottom: 0
-}</style>
-<style type="text/css">.qm_chat[data-v-389bd0e2] {
-                        -webkit-transition: all .3s ease-out 0s;
-                        width: 10px;
-                        height: 10px;
-                        z-index: -1;
-                        opacity: 0;
-                        background-color: #f9f9f9;
-                        position: fixed;
-                        right: -10px;
-                        bottom: -10px;
-                        -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, .4);
-                        box-shadow: 0 2px 20px rgba(0, 0, 0, .4);
-                        border-radius: 6px;
-                        cursor: default;
-                        overflow: hidden
-                      }
+}
+.qm_chat[data-v-389bd0e2] {
+  -webkit-transition: all .3s ease-out 0s;
+  width: 10px;
+  height: 10px;
+  z-index: -1;
+  opacity: 0;
+  background-color: #f9f9f9;
+  position: fixed;
+  right: -10px;
+  bottom: -10px;
+  -webkit-box-shadow: 0 2px 20px rgba(0, 0, 0, .4);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, .4);
+  border-radius: 6px;
+  cursor: default;
+  overflow: hidden
+}
 
 .qm_chat .chat_tit[data-v-389bd0e2] {
   padding: 12px 20px;
@@ -4976,8 +4844,8 @@ export default defineComponent({
   z-index: 20;
   right: 0;
   bottom: 0
-}</style>
-<style type="text/css">.qm_chat .chat_box a {
+}
+.qm_chat .chat_box a {
                         vertical-align: top;
                         color: #09c
                       }
