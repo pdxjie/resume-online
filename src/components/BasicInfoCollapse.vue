@@ -23,7 +23,11 @@ export default defineComponent({
     const allowEditor = () => {
       props.basicInfo.edit = !props.basicInfo.edit
     }
-    const removeBasicInfo = (id) => {
+    const removeBasicInfo = (id, index) => {
+      if (index === 0) {
+        message.error('必要信息无法去除')
+        return
+      }
       props.basicInfo.basicInfos = props.basicInfo.basicInfos.filter(info => info.id !== id)
     }
     const addBasicInfo = () => {
@@ -58,11 +62,11 @@ export default defineComponent({
         <a-row>
           <a-col :span="20">
             <a-row>
-              <a-col :span="12" v-for="info in basicInfo.basicInfos || []" :key="info.id">
+              <a-col :span="12" v-for="(info, index) in basicInfo.basicInfos || []" :key="info.id">
                 <a-input-group compact class="margin-b-10">
                   <a-input v-model:value="info.basicKey" style="width: 25%" :placeholder="info.placeholderKey"/>
                   <a-input v-model:value="info.basicVal" style="width: 60%" :placeholder="info.placeholderVal"/>
-                  <a-button @click="removeBasicInfo(info.id)">
+                  <a-button @click="removeBasicInfo(info.id, index)">
                     <template #icon><delete-outlined /></template>
                   </a-button>
                 </a-input-group>

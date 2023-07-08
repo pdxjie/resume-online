@@ -1,5 +1,6 @@
 <script>
 import { defineComponent, ref, computed, getCurrentInstance } from 'vue'
+import { message } from 'ant-design-vue'
 import { useStore } from 'vuex'
 export default defineComponent({
   props: {
@@ -28,6 +29,10 @@ export default defineComponent({
     }
     // 选择简历模板
     const selectResumeTemplate = (template) => {
+      if (template.basicInfo.tag === 'loading') {
+        message.info('敬请期待！')
+        return
+      }
       store.commit('CHANGE_RESUME_TEMPLATE', template)
       store.commit('CHANGE_TEMPLATE_STATUS')
     }
@@ -53,15 +58,15 @@ export default defineComponent({
     @close="onClose"
   >
     <div class="template-resume">
-      <div class="template-selection" v-for="template in templates" :key="template.img">
-        <img class="template-hover" :src="template.img" alt="">
-        <a-tag class="tag-resume" color="green">{{ template.name }}</a-tag>
+      <div class="template-selection" v-for="template in templates" :key="template.cover">
+        <img class="template-hover" :src="template.basicInfo.cover" alt="">
+        <a-tag class="tag-resume" color="green">{{ template.basicInfo.tag }}</a-tag>
         <div class="template-operation">
           <a-tooltip placement="top">
             <template #title>
               <span>简历预览</span>
             </template>
-            <a-button @click="previewResume(template.img)" shape="circle">
+            <a-button @click="previewResume(template.basicInfo.cover)" shape="circle">
               <template #icon>
                 <eye-outlined />
               </template>

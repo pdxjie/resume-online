@@ -4,8 +4,10 @@ import { normalTemplate } from '@/templates/resumeTemplate'
 export default createStore({
   state: {
     mode: 'markdown',
+    theme: '#1930a1',
     resumeTemplateDrawVisible: false,
-    selectedResumeTemplate: normalTemplate
+    selectedResumeTemplate: normalTemplate,
+    fullFinalInfoVisible: false
   },
   mutations: {
     CHANGE_MODE (state, mode) {
@@ -16,10 +18,12 @@ export default createStore({
     },
     CHANGE_RESUME_TEMPLATE (state, template) {
       state.selectedResumeTemplate = template
+    },
+    CHANGE_RESUME_THEME (state, color) {
+      state.theme = color
+    },
+    CHANGE_FULL_INFO (state) {
+      state.fullFinalInfoVisible = !state.fullFinalInfoVisible
     }
-  },
-  actions: {
-  },
-  modules: {
   }
 })
