@@ -12,12 +12,14 @@ import '@/assets/css/markdown.min.css'
 import './styles/reset.css'
 import '@/styles/theme-v1.less'
 import hevueImgPreview from 'hevue-img-preview'
+import htmlToPdf from './utils/parsePdf'
 const app = createApp(App)
 
 app.use(Antd)
   .use(router)
   .use(hevueImgPreview)
   .use(store)
+  .use(htmlToPdf)
   .mount('#app')
 
 nextTick(() => {

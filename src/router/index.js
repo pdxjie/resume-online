@@ -15,6 +15,7 @@ const routes = [
         component: () => import('@/views/content/Resume')
       },
       {
+        // 暂时没计划...
         path: '/about',
         name: 'About',
         meta: { title: '关于站长', icon: 'SoundOutlined' },

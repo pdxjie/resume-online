@@ -8,8 +8,10 @@ import { useRouter } from 'vue-router'
 import { normalTemplate } from '@/templates/resumeTemplate'
 import { Loading } from '@/templates/loading'
 import ResumeLogo from '@/assets/images/resume.svg'
+import FinalInfo from "../../components/FinalInfo"
+import { message } from "ant-design-vue"
 export default defineComponent({
-  components: { ResumeTemplateDraw, PickColor },
+  components: { FinalInfo, ResumeTemplateDraw, PickColor },
   setup () {
     // 变量
     const { width } = useWindowSize()
@@ -51,15 +53,25 @@ export default defineComponent({
     const changeTemplate = () => {
       store.commit('CHANGE_TEMPLATE_STATUS')
     }
+
+    const printPDF = () => {
+      store.commit('CHANGE_FULL_INFO')
+    }
+
+    const resetContent = () => {
+      message.info('这是一个Demo!')
+    }
     return {
       width,
       colorVal,
       selectedKeys,
       resumeLogo,
       filterMenu,
+      printPDF,
       menuClick,
       handleChange,
       changeTheme,
+      resetContent,
       changeTemplate,
       activeKey,
       templates
@@ -127,7 +139,7 @@ export default defineComponent({
               <template #title>
                 <span>导出</span>
               </template>
-              <a-button shape="circle">
+              <a-button @click="printPDF" shape="circle">
                 <template #icon>
                   <cloud-upload-outlined />
                 </template>
@@ -137,7 +149,7 @@ export default defineComponent({
               <template #title>
                 <span>重置</span>
               </template>
-              <a-button shape="circle">
+              <a-button @click="resetContent" shape="circle">
                 <template #icon>
                   <undo-outlined />
                 </template>
@@ -147,6 +159,7 @@ export default defineComponent({
         </div>
       </div>
     </a-layout-header>
+    <FinalInfo />
     <ResumeTemplateDraw :templates="templates" />
   </div>
 </template>
