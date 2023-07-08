@@ -2,11 +2,14 @@
 import { onMounted, ref, reactive, defineComponent } from 'vue'
 import ResumeTemplateDraw from '@/components/ResumeTemplateDraw'
 import { useWindowSize } from '@vueuse/core'
+import PickColor from 'vue-pick-colors'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { normalTemplate } from '@/templates/resumeTemplate'
+import { Loading } from '@/templates/loading'
 import ResumeLogo from '@/assets/images/resume.svg'
 export default defineComponent({
-  components: { ResumeTemplateDraw },
+  components: { ResumeTemplateDraw, PickColor },
   setup () {
     // 变量
     const { width } = useWindowSize()
@@ -18,31 +21,45 @@ export default defineComponent({
     const resumeLogo = ref(ResumeLogo)
     const routers = useRouter()
     const store = useStore()
+    const colorVal = ref('#1930a1')
     // methods
     onMounted(() => {
       menus = routers.getRoutes()
       filterMenu.value = menus.filter(menu => menu.children.length === 0)
+      let template = []
+      template.push(normalTemplate)
+      template.push(Loading)
+      templates.value = template
       console.log(filterMenu, 'routers')
     })
+    // 切换tab标签页 --Deprecated
     const handleChange = (tab) => {
       activeKey.value = tab
       store.commit('CHANGE_MODE', tab)
     }
+    // 修改简历主题色
+    const changeTheme = (color) => {
+      store.commit('CHANGE_RESUME_THEME', color)
+    }
+    // 切换菜单 --Deprecated
     const menuClick = (path) => {
       routers.push({
         path: path.key
       })
     }
+    // 切换简历模板
     const changeTemplate = () => {
       store.commit('CHANGE_TEMPLATE_STATUS')
     }
     return {
       width,
+      colorVal,
       selectedKeys,
       resumeLogo,
       filterMenu,
       menuClick,
       handleChange,
+      changeTheme,
       changeTemplate,
       activeKey,
       templates
@@ -77,9 +94,15 @@ export default defineComponent({
 <!--          </a-menu>-->
         </div>
       </div>
-      <div>
+      <div class="display-flex">
         <div class="operate-left">
           <div style="display:flex">
+            <div class="color-picker">
+              <a-button>
+                <PickColor v-model:value="colorVal" show-alpha @change="changeTheme"/>
+                主题选择
+              </a-button>
+            </div>
             <a-tooltip placement="top">
               <template #title>
                 <span>切换模板</span>
@@ -121,18 +144,6 @@ export default defineComponent({
               </a-button>
             </a-tooltip>
           </div>
-          <div style="margin-right:10px" v-if="width > 1000">
-            <a-select
-              ref="select"
-              v-model:value="activeKey"
-              style="width: 150px"
-              @focus="focus"
-              @change="handleChange"
-            >
-              <a-select-option value="markdown">MarkDown模式</a-select-option>
-              <a-select-option value="online">在线模板模式</a-select-option>
-            </a-select>
-          </div>
         </div>
       </div>
     </a-layout-header>
@@ -163,6 +174,13 @@ export default defineComponent({
 .operate-left {
   display: flex;
   align-items: center;
+  .color-picker {
+    ::v-deep .ant-btn {
+      display: flex;
+      align-items: center;
+      padding-left: 0px;
+    }
+  }
 }
 ::v-deep .ant-btn {
   margin-right: 10px!important;

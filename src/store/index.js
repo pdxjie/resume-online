@@ -4,6 +4,7 @@ import { normalTemplate } from '@/templates/resumeTemplate'
 export default createStore({
   state: {
     mode: 'markdown',
+    theme: '#1930a1',
     resumeTemplateDrawVisible: false,
     selectedResumeTemplate: normalTemplate
   },
@@ -16,10 +17,9 @@ export default createStore({
     },
     CHANGE_RESUME_TEMPLATE (state, template) {
       state.selectedResumeTemplate = template
+    },
+    CHANGE_RESUME_THEME (state, color) {
+      state.theme = color
     }
-  },
-  actions: {
-  },
-  modules: {
   }
 })

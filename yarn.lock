@@ -1328,6 +1328,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@popperjs/core@^2.11.2":
+  version "2.11.8"
+  resolved "https://registry.npmmirror.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
   resolved "https://registry.npmmirror.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.1.tgz#a21117b19ee9be70c379ec1877537ef2e1c63301"
@@ -8342,6 +8347,11 @@ requires-port@^1.0.0:
   resolved "https://registry.npmmirror.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
 
+reset.css@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmmirror.com/reset.css/-/reset.css-2.0.2.tgz#9c01309c820b72e8f219ebcc8e1411949604f7d7"
+  integrity sha512-HG5RQLYcAxou3yw+Gnzwan1jJCbOcIBZjwoD/YLWuAd8kkuDI/ZqC0uRhY4ReKOOJaM1Y1kvwebHOwK4P8Sevg==
+
 resize-observer-polyfill@^1.5.1:
   version "1.5.1"
   resolved "https://registry.npmmirror.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
@@ -9811,6 +9821,13 @@ vue-loader@^15.9.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-pick-colors@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.npmmirror.com/vue-pick-colors/-/vue-pick-colors-1.3.4.tgz#daaa24de15ecfb6b53f0ddd7acf9eb39aabe56f9"
+  integrity sha512-cW/XQPLFl+ZXiM6F075vj8b1pNVN7UnMsFiRHHnKIUzTuXemLjFhB5gTFTldDZPtPyRCxpUKrx5E51lwbSKLNw==
+  dependencies:
+    "@popperjs/core" "^2.11.2"
 
 vue-router@^4.0.0-0:
   version "4.2.2"
