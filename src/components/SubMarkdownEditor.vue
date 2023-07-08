@@ -2,6 +2,8 @@
 import { defineComponent, onMounted, ref } from "vue"
 import Vditor from 'vditor'
 import dayjs from 'dayjs'
+import weekday from "dayjs/plugin/weekday"
+import localeData from "dayjs/plugin/localeData"
 import 'vditor/dist/index.css'
 import { v4 as uuidv4 } from 'uuid'
 import { message } from 'ant-design-vue'
@@ -18,10 +20,12 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const dateFormat = 'YYYY/MM/DD'
+    const dateFormat = 'YYYY-MM-DD'
     const date = ref([dayjs(props.children.fromDate, dateFormat), dayjs(props.children.toDate, dateFormat)])
     const contentEditor = ref("")
     onMounted(() => {
+      dayjs.extend(weekday)
+      dayjs.extend(localeData)
       contentEditor.value = new Vditor(props.id, {
         toolbar: [
           'emoji', 'headings', 'bold', 'italic', 'strike', '|', 'line', 'quote',
@@ -39,10 +43,15 @@ export default defineComponent({
         }
       })
     })
-    const updateDate = () => {
+    const updateDate = (date, dateStr) => {
+      props.children.toNow = false
+      props.children.fromDate = dateStr[0].toString().replace('-', '/')
+      props.children.toDate = dateStr[1].toString().replace('-', '/')
     }
 
-    const updateToNow = () => {}
+    const updateToNow = () => {
+      props.children.toDate = '至今'
+    }
 
     const handleAdd = () => {
       const child = {
@@ -51,8 +60,8 @@ export default defineComponent({
         title: '自定义',
         edit: false,
         isAppear: true,
-        fromDate: new Date().toString(),
-        toDate: new Date().toString(),
+        fromDate: dayjs(new Date().toDateString()).format('YYYY-MM-DD'),
+        toDate: dayjs(new Date().toDateString()).format('YYYY-MM-DD'),
         toNow: false,
         isDisable: false,
         subject: '',

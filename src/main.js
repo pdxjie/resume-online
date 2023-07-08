@@ -13,6 +13,11 @@ import './styles/reset.css'
 import '@/styles/theme-v1.less'
 import hevueImgPreview from 'hevue-img-preview'
 import htmlToPdf from './utils/parsePdf'
+import dayjs from 'dayjs'
+import weekday from "dayjs/plugin/weekday"
+import localeData from "dayjs/plugin/localeData"
+dayjs.extend(weekday)
+dayjs.extend(localeData)
 const app = createApp(App)
 
 app.use(Antd)
@@ -20,6 +25,7 @@ app.use(Antd)
   .use(hevueImgPreview)
   .use(store)
   .use(htmlToPdf)
+  .use(dayjs)
   .mount('#app')
 
 nextTick(() => {

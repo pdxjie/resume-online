@@ -3,6 +3,8 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import Vditor from 'vditor'
 import dayjs from 'dayjs'
+import weekday from "dayjs/plugin/weekday"
+import localeData from "dayjs/plugin/localeData"
 import 'vditor/dist/index.css'
 import { message } from 'ant-design-vue'
 import { v4 as uuidv4 } from "uuid"
@@ -18,11 +20,14 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const dateFormat = 'YYYY/MM/DD'
+    const dateFormat = 'YYYY-MM-DD'
     const activeKey = ref('1')
     const contentEditor = ref("")
     const store = useStore()
     onMounted(() => {
+      dayjs.extend(weekday)
+      dayjs.extend(localeData)
+      console.log(dayjs(new Date()).format('YYYY/MM/DD'))
       contentEditor.value = new Vditor(props.id, {
         toolbar: [
           'emoji', 'headings', 'bold', 'italic', 'strike', '|', 'line', 'quote',
@@ -54,8 +59,8 @@ export default defineComponent({
         title: '自定义',
         edit: false,
         isAppear: true,
-        fromDate: new Date().toString(),
-        toDate: new Date().toString(),
+        fromDate: dayjs(new Date()).format('YYYY/MM/DD'),
+        toDate: dayjs(new Date()).format('YYYY/MM/DD'),
         toNow: false,
         isDisable: false,
         subject: '',
@@ -87,14 +92,15 @@ export default defineComponent({
     }
     const changeIsAppear = (val) => {
       props.otherInfo.isAppear = val
+      props.otherInfo.toNow = false
     }
     const updateToNow = () => {
       props.otherInfo.toDate = '至今'
     }
     // 修改时间
-    const updateDate = (date) => {
-      console.log(JSON.stringify(date))
-      console.log(dayjs(date[1].toString().substring(0, 10), 'YYYY-MM-DD'), 'date')
+    const updateDate = (date, dateStr) => {
+      props.otherInfo.fromDate = dateStr[0].toString().replace('-', '/')
+      props.otherInfo.toDate = dateStr[1].toString().replace('-', '/')
     }
     const sortUp = () => {
       let resume = store.state.selectedResumeTemplate
@@ -131,8 +137,8 @@ export default defineComponent({
         title: '自定义',
         edit: false,
         isAppear: true,
-        fromDate: new Date().toString(),
-        toDate: new Date().toString(),
+        fromDate: '',
+        toDate: '',
         toNow: false,
         isDisable: false,
         subject: '',

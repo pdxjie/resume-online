@@ -44,7 +44,7 @@ export default defineComponent({
 })
 </script>
 <template>
-  <a-modal v-model:visible="fianlInfoVisible" title="简历名称" @ok="handleOk">
+  <a-modal v-model:visible="fianlInfoVisible" title="简历名称" @ok="handleOk" :closable="false">
     <template #footer>
       <a-button key="back" @click="handleCancel">取消</a-button>
       <a-button key="submit" type="primary" :loading="loading" @click="handleOk">生成简历</a-button>
