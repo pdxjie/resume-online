@@ -7,35 +7,29 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const loading = ref(false)
-    const visible = ref(false)
     const title = ref('')
 
     const fianlInfoVisible = computed(() => {
       return store.state.fullFinalInfoVisible
     })
 
-    const showModal = () => {
-      visible.value = true
-    }
-
     const handleOk = () => {
       loading.value = true
       htmlToPdf.getPdf(title.value)
       setTimeout(() => {
         loading.value = false
-        visible.value = false
         store.commit('CHANGE_FULL_INFO')
       }, 2000)
+      title.value = ''
     }
 
     const handleCancel = () => {
       store.commit('CHANGE_FULL_INFO')
+      title.value = ''
     }
     return {
       title,
       loading,
-      visible,
-      showModal,
       handleOk,
       handleCancel,
       fianlInfoVisible

@@ -42,7 +42,7 @@ export default defineComponent({
             <div id="resume_pc" class="pc_main" data-v-2e658a64="">
               <div class="weiruanyahei" data-v-2e658a64="">
                 <div class="resume_box" data-v-2e658a64="">
-                  <div id="basicInfo" class="basic_info_box" style="padding:28px 30px 20px;" data-v-2e658a64="">
+                  <div id="basicInfo" class="basic_info_box" style="padding:25px 30px 20px;" data-v-2e658a64="">
                     <!-- 基础信息 -->
                     <div>
                       <div class="font-20 font-weight-bold">{{ resumeTemplate.basicInfo.basicInfos[0].basicVal }}</div>
@@ -59,8 +59,8 @@ export default defineComponent({
                         </span>
                       </div>
                     </div>
-                    <div class="photo_box" style="right:50px;" data-v-2e658a64="">
-                      <img v-show="resumeTemplate.basicInfo.isAppear" :src="resumeTemplate.basicInfo.avatar" style="width: 100%;height: 150px;object-fit: cover" alt="" data-v-2e658a64="">
+                    <div class="photo_box" style="right:50px;width: 180px!important;height: 160px!important;" data-v-2e658a64="">
+                      <img v-show="resumeTemplate.basicInfo.isAppear" :src="resumeTemplate.basicInfo.avatar" style="width: 180px!important;height: 160px!important;object-fit: cover" alt="" data-v-2e658a64="">
                     </div>
                   </div>
                   <div class="resume_content_all" style="margin:0 30px 0;"
@@ -130,5 +130,9 @@ export default defineComponent({
   margin-top: 10px;
   border: 2px dotted #eee;
   padding: 80px;
+}
+#tpl_box {
+  /* 避免内容分页 */
+  page-break-inside: avoid!important;
 }
 </style>
